@@ -1,0 +1,20 @@
+#2. Từng service
+#2.0. gateway
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: gateway-gateway
+  namespace: microservices
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: smartconsultor-certificate-tls
+    hosts:
+    - "smartconsultor.com"

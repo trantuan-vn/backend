@@ -1,0 +1,63 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+  namespace: cert-manager
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ca-certificate
+  namespace: cert-manager
+spec:
+  secretName: ca-certificate-tls
+  duration: 8760h # 1 year
+  renewBefore: 360h # 15 days
+  commonName: my-ca
+  isCA: true
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: ca-issuer
+  namespace: cert-manager
+spec:
+  ca:
+    secretName: ca-certificate-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: smartconsultor-certificate
+  namespace: keycloak
+spec:
+  secretName: smartconsultor-certificate-tls
+  duration: 8760h # Thời gian hiệu lực của chứng chỉ
+  renewBefore: 360h # Thời gian trước khi hết hạn để gia hạn
+  commonName: "auth.smartconsultor.com"
+  dnsNames:
+  - "auth.smartconsultor.com"
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: smartconsultor-certificate
+  namespace: istio-system
+spec:
+  secretName: smartconsultor-certificate-tls
+  duration: 8760h # Thời gian hiệu lực của chứng chỉ
+  renewBefore: 360h # Thời gian trước khi hết hạn để gia hạn
+  commonName: "smartconsultor.com"
+  dnsNames:
+  - "smartconsultor.com"
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
