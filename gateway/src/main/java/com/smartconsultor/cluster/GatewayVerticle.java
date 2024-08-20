@@ -57,19 +57,19 @@ import io.vertx.core.net.PemTrustOptions;
 @SuppressWarnings("deprecation")
 public class GatewayVerticle extends AbstractVerticle {
   private static final Logger logger = LoggerFactory.getLogger(GatewayVerticle.class); 
-  private OAuth2Auth keycloakAuthProvider;
-  
+  private OAuth2Auth keycloakAuthProvider; 
+   
   // tag::start[]
   @Override
   public void start() {
-    Router router = Router.router(vertx);   
+    Router router = Router.router(vertx);    
     setupRouter(router);
     vertx.createHttpServer()
       .requestHandler(router)
       .listen(config().getJsonObject("server").getInteger("api.gateway.http.port"))
       .onSuccess(server -> {
         logger.info("Gateway Server started and listening on port {}", server.actualPort()); 
-    });
+    }); 
   }
   // end::start[]
   // tag::router[]
@@ -173,13 +173,10 @@ public class GatewayVerticle extends AbstractVerticle {
     SockJSBridgeOptions opts = new SockJSBridgeOptions()
       .addInboundPermitted(new PermittedOptions().setAddress("chat.to.server"))
       .addOutboundPermitted(new PermittedOptions().setAddress("chat.to.client"));
-
     // Create the event bus bridge and add it to the router.
     SockJSHandler ebHandler = SockJSHandler.create(vertx);
     router.route("/eventbus*").subRouter(ebHandler.bridge(opts));
-    
     EventBus eb = vertx.eventBus();
-
     // Register to listen for messages coming IN to the server
     eb.consumer("chat.to.server").handler(message -> {
       // Create a timestamp string

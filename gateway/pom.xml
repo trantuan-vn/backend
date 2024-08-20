@@ -4,94 +4,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.smartconsultor</groupId>
-  <artifactId>clustering-kubernetes-gateway</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <parent> 
+    <groupId>com.smartconsultor</groupId>
+    <artifactId>com-smartconsultor-microservice</artifactId>
+    <version>1.0.0</version>    
+  </parent>
+
+  <artifactId>com-smartconsultor-microservice-gateway</artifactId>
+  <version>1.0.0</version>
 
   <properties>
-    <!-- <maven.compiler.source>1.8</maven.compiler.source> -->
-    <!-- <maven.compiler.target>1.8</maven.compiler.target> -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <verticle>com.smartconsultor.cluster.GatewayVerticle</verticle>
-    <version.infinispan>15.0.5.Final</version.infinispan>
+    <main.launcher>com.smartconsultor.cluster.GatewayLauncher</main.launcher>
+    <main.verticle>com.smartconsultor.cluster.GatewayVerticle</main.verticle>
+    <main.jdwp>5006</main.jdwp>
+    <main.image>tuantahp/gateway</main.image>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.vertx</groupId>
-        <artifactId>vertx-stack-depchain</artifactId>
-        <version>4.5.4</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
-    <dependency>
-        <groupId>io.vertx</groupId>
-        <artifactId>vertx-core</artifactId>
-    </dependency>  
-    <dependency>
-      <groupId>io.vertx</groupId> 
-      <artifactId>vertx-web</artifactId>
-    </dependency>
-    <!-- health-check -->
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-health-check</artifactId>
-    </dependency>
-    <!-- codegen -->
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-codegen</artifactId>
-      <version>4.5.7</version>
-      <classifier>processor</classifier>
-      <scope>provided</scope>
-    </dependency>  
-    <!-- Log4j2 dependencies -->
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-api</artifactId>
-        <version>2.14.1</version>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
-        <version>2.14.1</version>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-slf4j-impl</artifactId>
-        <version>2.14.1</version>
-        <scope>compile</scope>
-    </dependency>
-    <!-- GELF Log4j2 Appender -->    
-    <dependency>
-        <groupId>biz.paluch.logging</groupId>
-        <artifactId>logstash-gelf</artifactId>
-        <version>1.13.0</version>
-        <scope>compile</scope>
-    </dependency> 
     <!-- oauth2 -->
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-auth-oauth2</artifactId>
-      <version>4.5.7</version>
-      <scope>compile</scope>
     </dependency>
-    <!-- infinispan -->
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-infinispan</artifactId>
-      <version>4.5.4</version> 
-    </dependency>
+    <!-- sstore-infinispan -->
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-web-sstore-infinispan</artifactId>
-      <version>4.5.9</version>
     </dependency>    
     <!-- metrics-prometheus -->
     <dependency>
@@ -110,54 +49,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version> 
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-              </transformers>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>    
+      </plugin>
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
-        <version>3.2.0</version>
-        <configuration>
-          <to>
-            <image>tuantahp/gateway</image>
-          </to>
-          <container>
-            <mainClass>com.smartconsultor.cluster.GatewayLauncher</mainClass>
-            <args>
-              <arg>run</arg>
-              <arg>${verticle}</arg>
-              <arg>-cluster</arg>
-              <arg>-conf</arg>
-              <arg>/app/config/docker.json</arg>              
-            </args>
-            <ports>
-              <port>8080</port>
-              <port>7800</port>
-              <port>5006</port> <!-- Port cho JDWP -->
-            </ports>
-          </container>
-          <extraDirectories>
-            <paths>
-              <path>
-                <from>${project.basedir}/src/config</from>
-                <into>/app/config</into>
-              </path>
-            </paths>
-          </extraDirectories>          
-        </configuration>
-      </plugin>
+      </plugin>      
     </plugins>
   </build>
 </project>

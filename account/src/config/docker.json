@@ -1,0 +1,6 @@
+{
+    "server": {
+      "api.gateway.http.port": 8080,
+      "api.gateway.http.address": "smartconsultor.com"
+    }
+}

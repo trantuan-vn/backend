@@ -1,28 +1,31 @@
-apiVersion: skaffold/v4beta9
+apiVersion: skaffold/v4beta11
 kind: Config
 metadata:
-  name: microservices
+  name: backend
 build:
   artifacts:
     - image: tuantahp/account
       context: account
       jib:
-        project: com.smartconsultor:clustering-kubernetes-account
+        project: com.smartconsultor:com-smartconsultor-microservice-account
     - image: tuantahp/gateway
       context: gateway
       jib:
-        project: com.smartconsultor:clustering-kubernetes-gateway
+        project: com.smartconsultor:com-smartconsultor-microservice-gateway
 manifests:
   rawYaml:
     #- k8s/0_cert.yaml
     #- k8s/0_toiuu_envoyfilter.yaml
+    #- k8s/1_account_deployment_v1.yaml
     - k8s/1_account_deployment_v1_debug.yaml
+    #- k8s/2_gateway_deployment_v1.yaml
     - k8s/2_gateway_deployment_v1_debug.yaml
     - k8s/3_ingressgateway.yaml
     - k8s/4_gateway_service.yaml
     #- k8s/5_keycloak_service.yaml
-    #- k8s/6_monitor_service.yaml    
-portForward:
+    #- k8s/6_monitor_service.yaml
+    #- k8s/ingressgateway.yaml
+portForward:    
   - resourceType: deployment
     resourceName: account-deployment-v1
     port: 5005
@@ -30,6 +33,4 @@ portForward:
   - resourceType: deployment
     resourceName: gateway-deployment-v1
     port: 5006
-    localPort: 5006  
-
-         
+    localPort: 5006 

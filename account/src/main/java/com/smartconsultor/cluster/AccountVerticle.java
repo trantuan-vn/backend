@@ -15,7 +15,7 @@ public class AccountVerticle extends AbstractVerticle {
   private static final Logger logger  = LoggerFactory.getLogger(AccountVerticle.class);
 
   // tag::config[]
-  private static final int HTTP_PORT = Integer.parseInt(System.getenv().getOrDefault("HTTP_PORT", "0"));
+  //private static final int HTTP_PORT = Integer.parseInt(System.getenv().getOrDefault("HTTP_PORT", "0"));
   private static final String POD_NAME = System.getenv().getOrDefault("POD_NAME", "unknown");
   // end::config[]
   
@@ -26,7 +26,7 @@ public class AccountVerticle extends AbstractVerticle {
     Router router = setupRouter();
     vertx.createHttpServer()
       .requestHandler(router)
-      .listen(HTTP_PORT)
+      .listen(config().getJsonObject("server").getInteger("api.gateway.http.port"))
       .onSuccess(server -> {
         logger.info("Backend Server started and listening on port {}", server.actualPort());
       });
@@ -35,10 +35,10 @@ public class AccountVerticle extends AbstractVerticle {
 
   // tag::consumer[]
   private void registerConsumer() {
-    vertx.eventBus().<String>consumer("greetings", msg -> {
+    vertx.eventBus().<String>consumer("greetings", msg -> { 
       logger.info("Body {}", msg.body());
       msg.reply(String.format("Hello %s from %s", msg.body(), POD_NAME));
-    });
+    }); 
   }
   // end::consumer[]
 
@@ -50,7 +50,7 @@ public class AccountVerticle extends AbstractVerticle {
     Handler<Promise<Status>> procedure = ClusterHealthCheck.createProcedure(vertx, false);
     HealthChecks checks = HealthChecks.create(vertx).register("cluster-health", procedure);
     router.get("/readiness").handler(HealthCheckHandler.createWithHealthChecks(checks));
-    return router; 
+    return router;   
   } 
   // end::router[]
 }
