@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gpt-j-service
+  namespace: microservice
+spec:
+  selector:
+    app: gpt-j
+  ports:
+    - protocol: TCP
+      port: 8080          # Port mà Service sẽ lắng nghe
+      targetPort: 8080  # Port mà container đang chạy

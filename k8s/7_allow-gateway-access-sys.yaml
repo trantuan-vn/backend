@@ -1,0 +1,70 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: gateway-allow-gateway-access-sys
+  namespace: microservice  # Thay bằng namespace của bạn
+spec:
+  selector:
+    matchLabels:
+      app: gateway  # Thay bằng nhãn của ứng dụng đích mà bạn muốn bảo vệ
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        pods:
+          matchLabels:
+            app: gateway  # Chỉ cho phép các pod có nhãn app=gateway
+    to:
+    - operation:
+        paths: ["/sys/*"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: gateway-deny-all-other-access
+  namespace: microservice  # Thay bằng namespace của bạn
+spec:
+  selector:
+    matchLabels:
+      app: gateway  # Thay bằng nhãn của dịch vụ đích mà bạn muốn bảo vệ
+  action: DENY
+  rules:
+  - to:
+    - operation:
+        paths: ["/sys/*"]  # Đối với các đường dẫn /sys/*
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: gateway-allow-kubelet-access
+  namespace: microservices  # Thay bằng namespace của bạn
+spec:
+  selector:
+    matchLabels:
+      app: gateway  # Nhãn của Pod cần bảo vệ
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        ipBlocks:
+          - "192.168.49.2/32"  # IP của node minikube
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/health", "/readiness"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: gateway-deny-other-access
+  namespace: microservices  # Thay bằng namespace của bạn
+spec:
+  selector:
+    matchLabels:
+      app: gateway  # Nhãn của Pod cần bảo vệ
+  action: DENY
+  rules:
+  - to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/health", "/readiness"]

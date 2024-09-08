@@ -11,16 +11,33 @@
   </parent>
 
   <artifactId>com-smartconsultor-microservice-account</artifactId>
-  <version>1.0.0</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <main.launcher>io.vertx.core.Launcher</main.launcher>
-    <main.verticle>com.smartconsultor.cluster.AccountVerticle</main.verticle>
+    <main.verticle>com.smartconsultor.microservice.account.AccountVerticle</main.verticle>
     <main.jdwp>5005</main.jdwp>
     <main.image>tuantahp/account</main.image>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.smartconsultor</groupId>
+      <artifactId>com-smartconsultor-microservice-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-jdbc-client</artifactId>
+      <optional>true</optional>
+    </dependency>    
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-pg-client</artifactId>
+      <optional>true</optional>
+    </dependency>    
+  </dependencies>
+  
   <build>
     <plugins>
       <plugin>

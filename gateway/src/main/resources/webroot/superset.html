@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhúng Dashboard từ Superset</title>
+</head>
+<body>
+  <h1>Dashboard của tôi</h1>
+  
+  <div id="dashboard-container"></div>
+
+  <script src="https://unpkg.com/@superset-ui/embedded-sdk"></script>
+  <script>
+    async function getGuestToken() {
+      const response = await fetch('http://localhost:8088/api/v1/security/guest_token/', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          // Thông tin về tài nguyên và quyền mà bạn cần cấp cho guest token
+          resources: [
+            {
+              type: 'dashboard',
+              id: '4' // Thay bằng ID dashboard của bạn
+            }
+          ],
+          rls: [] // Rule level security nếu cần, có thể để trống
+        })
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        console.error('Error fetching guest token:', error);
+        return null;
+      }
+      
+      const data = await response.json();
+      return data.token;
+    }
+
+    // Nhúng dashboard vào trang
+    getGuestToken().then(token => {
+      if (token) {
+        supersetEmbeddedSdk.embedDashboard({
+            id: '4', // ID dashboard
+            supersetDomain: 'http://localhost:8088',
+            mountPoint: document.getElementById('dashboard-container'),
+            fetchGuestToken: () => Promise.resolve(token),
+            dashboardUiConfig: { // dashboard UI config: hideTitle, hideTab, hideChartControls, filters.visible, filters.expanded (optional), urlParams (optional)
+                hideTitle: true,
+                filters: {
+                    expanded: true,
+                }
+            },          
+            // optional additional iframe sandbox attributes
+            iframeSandboxExtras: ['allow-top-navigation', 'allow-popups-to-escape-sandbox']
+        });
+      }
+    });
+  </script>
+</body>
+</html>

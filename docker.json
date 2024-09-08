@@ -1,0 +1,33 @@
+{
+    "gateway" : {
+        "server": {
+            "port": 8080,
+            "host": "0.0.0.0"
+        },
+
+        "infinispan": {
+            "host": "infinispan.infinispan.svc.cluster.local",
+            "port": 11222,
+            "username":"developer",
+            "password":"LGpGRUR8"
+        },
+      
+        "keycloak": {
+            "realm": "master",
+            "realm-public-key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwM/Lq8QZhMthaGjR8sBfxMVVoHX1w68vy7Ev4Byz/zUqvCXe4jafQKP4Bm/lfAp0gPnjJlgPnY+s2V9TYkgqqhd/vzKfRT3/gTT+Fv2nohuNm3mnKVUUCk2q45pauvkn0UTKbZ2Nq+cS4/G32JGoP+YeIeIVGqN5q8fRzaBdwph/j5UKeyVP68IzbLFmdZr7fclZsHa9K6VAzPEp0MQ+sT55ssK+lZmPsV6Pm5TshB3Luu3/gjdi3d3yRJMs9tXrgsyjA8aato/8nFfC+mzUU++4jeaiv9fe0rUM2jYpfTckTJv+92bQ9Fr0jx9zIF2shZar1ag8bQFggXUcAOuOawIDAQAB",
+            "auth-server-url": "https://auth.smartconsultor.com", 
+            "ssl-required": "external",
+            "resource": "test",
+            "credentials": {
+              "secret": "UhuLa6UoJ4KgLppyrgrpDjowxFqzNQ1p"
+            },
+            "callback_url": "https://smartconsultor.com/callback"
+        }        
+    },
+    "account": {
+        "server": {
+            "port": 8080,
+            "host": "0.0.0.0"
+        }        
+    }
+}

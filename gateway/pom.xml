@@ -11,17 +11,21 @@
   </parent>
 
   <artifactId>com-smartconsultor-microservice-gateway</artifactId>
-  <version>1.0.0</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <main.launcher>com.smartconsultor.cluster.GatewayLauncher</main.launcher>
-    <main.verticle>com.smartconsultor.cluster.GatewayVerticle</main.verticle>
+    <main.launcher>com.smartconsultor.microservice.gateway.GatewayLauncher</main.launcher>
+    <main.verticle>com.smartconsultor.microservice.gateway.GatewayVerticle</main.verticle>
     <main.jdwp>5006</main.jdwp>
     <main.image>tuantahp/gateway</main.image>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.smartconsultor</groupId>
+      <artifactId>com-smartconsultor-microservice-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <!-- oauth2 -->
     <dependency>
       <groupId>io.vertx</groupId>

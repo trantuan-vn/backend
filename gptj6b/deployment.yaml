@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpt-j-deployment
+  namespace: microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpt-j
+  template:
+    metadata:
+      labels:
+        app: gpt-j
+    spec:
+      containers:
+      - name: gpt-j-container
+        image: tuantahp/gptjb6:latest
+        resources:
+          limits:
+            nvidia.com/gpu: 4  # Yêu cầu 4 GPU
+          requests:
+            nvidia.com/gpu: 4
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "all"
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: "compute,utility"

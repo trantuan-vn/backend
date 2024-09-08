@@ -21,7 +21,7 @@
 
         var eb = new EventBus('https://smartconsultor.com/eventbus');
         eb.enableReconnect(true);
-
+        var writeHandlerID = null; // Variable to store the writeHandlerID
         // Handle connection status
         var statusDiv = document.getElementById('status');
         function updateStatus(connected) {
@@ -32,12 +32,24 @@
         eb.onopen = function () {
             console.log('Connected to Vert.x Event Bus');
             updateStatus(true);
-            
-            eb.registerHandler('chat.to.client', function (error, message) {
+                     
+            eb.registerHandler('Free', function (error, message) {
                 var messageDiv = document.createElement('div');
                 messageDiv.textContent = message.body;
                 document.getElementById('messages').appendChild(messageDiv);
             });
+            
+            // Direct WebSocket handler
+            eb.socket.onmessage = function(event) {
+                try {
+                    var data = JSON.parse(event.data);
+                    var messageDiv = document.createElement('div');
+                    messageDiv.textContent = data.body;
+                    document.getElementById('messages').appendChild(messageDiv);                    
+                } catch (e) {
+                    console.error('Failed to parse WebSocket message:', e);
+                }
+            };           
         };
 
         eb.onclose = function () {
@@ -47,13 +59,24 @@
 
         // Handle form submission to send messages to the server
         document.getElementById('messageForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            var messageInput = document.getElementById('messageInput');
-            var messageText = messageInput.value.trim();
-            if (messageText !== '') {
-                
-                eb.send('chat.to.server', { body: messageText });
-                messageInput.value = '';
+            try {
+                event.preventDefault();
+                var messageInput = document.getElementById('messageInput');
+                var messageText = messageInput.value.trim();
+                if (messageText !== '') {
+                    //eb.send(writeHandlerID, { body: messageText });
+                    // Sử dụng `eb.socket.send` để gửi thông điệp trực tiếp qua WebSocket
+                    var messageToSend = JSON.stringify({
+                        type: 'send',
+                        address: '',
+                        body: { message: 'Hello from client using eb.socket!' }
+                    });
+                    // Gửi thông điệp qua WebSocket
+                    eb.socket.send(messageToSend);
+                    messageInput.value = '';
+                }
+            } catch (e) {
+                console.error('Failed to parse WebSocket message:', e);
             }
         });
     </script>

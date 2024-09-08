@@ -1,7 +1,7 @@
 {
     "server": {
-      "api.gateway.http.port": 8080,
-      "api.gateway.http.address": "smartconsultor.com"
+      "port": 8080,
+      "host": "0.0.0.0"
     },
 
     "redis": {
@@ -26,6 +26,7 @@
       "resource": "test",
       "credentials": {
         "secret": "UhuLa6UoJ4KgLppyrgrpDjowxFqzNQ1p"
-      }
+      },
+      "callback_url": "https://smartconsultor.com/callback"
     }
 }

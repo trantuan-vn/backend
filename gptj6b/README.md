@@ -1,0 +1,1 @@
+tạo 1 service python trên vs studio code để sử dụng gpt-j-6b tận dụng sức mạnh của NVIDIA DGX Station A100

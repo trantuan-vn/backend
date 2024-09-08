@@ -1,6 +1,11 @@
 {
     "server": {
-      "api.gateway.http.port": 8080,
-      "api.gateway.http.address": "smartconsultor.com"
-    }
+      "port": 8080,
+      "host":"0.0.0.0"
+    },
+    "url": "jdbc:postgresql://citus-master:5432/smartconsultor",
+    "driver_class": "org.postgresql.Driver",
+    "user": "smartconsultor",
+    "password": "secret99",
+    "max_pool_size": 30    
 }
