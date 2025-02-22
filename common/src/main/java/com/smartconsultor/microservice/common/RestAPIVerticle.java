@@ -26,8 +26,6 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import com.smartconsultor.microservice.common.utils.RequestUtil;
-
 /**
  * An abstract base verticle that provides several helper methods for REST API.
  *

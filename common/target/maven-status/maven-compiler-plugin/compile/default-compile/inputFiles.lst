@@ -1,0 +1,7 @@
+/Users/cunkem/backend/common/src/main/java/com/smartconsultor/microservice/common/RestAPIVerticle.java
+/Users/cunkem/backend/common/src/main/java/com/smartconsultor/microservice/common/config/ConfigRetrieverHelper.java
+/Users/cunkem/backend/common/src/main/java/com/smartconsultor/microservice/common/config/Log4jConfigurationServiceHandler.java
+/Users/cunkem/backend/common/src/main/java/com/smartconsultor/microservice/common/functional/Functional.java
+/Users/cunkem/backend/common/src/main/java/com/smartconsultor/microservice/common/package-info.java
+/Users/cunkem/backend/common/src/main/java/com/smartconsultor/microservice/common/service/JdbcRepositoryWrapper.java
+/Users/cunkem/backend/common/src/main/java/com/smartconsultor/microservice/common/utils/RequestUtil.java

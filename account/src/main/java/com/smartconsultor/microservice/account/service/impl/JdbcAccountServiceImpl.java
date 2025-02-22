@@ -37,12 +37,7 @@ public class JdbcAccountServiceImpl extends JdbcRepositoryWrapper implements Acc
 
   @Override
   public AccountService addAccount(Account account, Handler<AsyncResult<Void>> resultHandler) {
-    JsonArray params = new JsonArray().add(account.getId())
-      .add(account.getUsername())
-      .add(account.getFullname())
-      .add(account.getPhone())
-      .add(account.getEmail())
-      .add(account.getBirthDate());
+    JsonArray params = new JsonArray();
     this.executeNoResult(params, INSERT_STATEMENT, resultHandler);
     return this;
   }
@@ -76,12 +71,7 @@ public class JdbcAccountServiceImpl extends JdbcRepositoryWrapper implements Acc
 
   @Override
   public AccountService updateAccount(Account account, Handler<AsyncResult<Account>> resultHandler) {
-    JsonArray params = new JsonArray()
-      .add(account.getUsername())
-      .add(account.getPhone())
-      .add(account.getEmail())
-      .add(account.getBirthDate())
-      .add(account.getId());
+    JsonArray params = new JsonArray();
     this.execute(params, UPDATE_STATEMENT, account, resultHandler);
     return this;
   }

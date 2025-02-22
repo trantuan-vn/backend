@@ -2,21 +2,18 @@ package com.smartconsultor.microservice.account.model;
 
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.core.json.JsonObject;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
- * User account data object
+ * User account data object with customizable attributes
  *
  * @author Eric Zhao
  */
 @DataObject(generateConverter = true)
 public class Account {
 
-  private String id;
-  private String username;
-  private String fullname;
-  private String phone;
-  private String email;
-  private Long birthdate;
+  private Map<String, Object> attributes = new HashMap<>();
 
   public Account() {
     // Empty constructor
@@ -32,57 +29,12 @@ public class Account {
     return json;
   }
 
-
-  public String getId() {
-    return id;
+  public Object getAttribute(String key) {
+    return attributes.get(key);
   }
 
-  public Account setId(String id) {
-    this.id = id;
-    return this;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public Account setUsername(String username) {
-    this.username = username;
-    return this;
-  }
-  public String getFullname() {
-    return fullname;
-  }
-
-  public Account setFullname(String fullname) {
-    this.fullname = fullname;
-    return this;
-  }
-
-  public String getPhone() {
-    return phone;
-  }
-
-  public Account setPhone(String phone) {
-    this.phone = phone;
-    return this;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public Account setEmail(String email) {
-    this.email = email;
-    return this;
-  }
-
-  public Long getBirthDate() {
-    return birthdate;
-  }
-
-  public Account setBirthDate(Long birthdate) {
-    this.birthdate = birthdate;
+  public Account setAttribute(String key, Object value) {
+    attributes.put(key, value);
     return this;
   }
 

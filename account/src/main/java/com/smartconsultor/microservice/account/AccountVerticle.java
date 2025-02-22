@@ -14,6 +14,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;    
 
+
 public class AccountVerticle extends RestAPIVerticle {
 
   private static final Logger logger  = LoggerFactory.getLogger(AccountVerticle.class);

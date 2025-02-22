@@ -24,7 +24,7 @@ manifests:
     - k8s/4_gateway_service.yaml
     #- k8s/5_keycloak_service.yaml
     #- k8s/6_monitor_service.yaml
-    #- k8s/ingressgateway.yaml
+    - k8s/7_allow-gateway-access-sys.yaml
 portForward:    
   - resourceType: deployment
     resourceName: account-deployment-v1

@@ -85,59 +85,6 @@ public class AccountService {
   }
 
   /**
-   * Delete all user accounts from the persistence
-   * @param resultHandler the result handler will be called as soon as the users have been removed. The async result indicates whether the operation was successful or not.
-   * @return 
-   */
-  public com.smartconsultor.microservice.account.rxjava.service.AccountService deleteAllAccounts(io.vertx.core.Handler<io.vertx.core.AsyncResult<java.lang.Void>> resultHandler) { 
-    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.deleteAllAccounts(resultHandler));
-    return ret;
-  }
-
-  /**
-   * Update user account info.
-   * @param account a account entity that we want to update
-   * @param resultHandler the result handler will be called as soon as the account has been added. The async result indicates whether the operation was successful or not.
-   * @return 
-   */
-  public com.smartconsultor.microservice.account.rxjava.service.AccountService updateAccount(com.smartconsultor.microservice.account.model.Account account, io.vertx.core.Handler<io.vertx.core.AsyncResult<com.smartconsultor.microservice.account.model.Account>> resultHandler) { 
-    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.updateAccount(account, resultHandler));
-    return ret;
-  }
-
-  /**
-   * Retrieve all user accounts.
-   * @param resultHandler the result handler will be called as soon as the users have been retrieved. The async result indicates whether the operation was successful or not.
-   * @return 
-   */
-  public com.smartconsultor.microservice.account.rxjava.service.AccountService retrieveAllAccounts(io.vertx.core.Handler<io.vertx.core.AsyncResult<java.util.List<com.smartconsultor.microservice.account.model.Account>>> resultHandler) { 
-    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.retrieveAllAccounts(resultHandler));
-    return ret;
-  }
-
-  /**
-   * Retrieve the user account with certain `username`.
-   * @param username username
-   * @param resultHandler the result handler will be called as soon as the user has been retrieved. The async result indicates whether the operation was successful or not.
-   * @return 
-   */
-  public com.smartconsultor.microservice.account.rxjava.service.AccountService retrieveByUsername(java.lang.String username, io.vertx.core.Handler<io.vertx.core.AsyncResult<com.smartconsultor.microservice.account.model.Account>> resultHandler) { 
-    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.retrieveByUsername(username, resultHandler));
-    return ret;
-  }
-
-  /**
-   * Retrieve the user account with certain `id`.
-   * @param id user account id
-   * @param resultHandler the result handler will be called as soon as the user has been retrieved. The async result indicates whether the operation was successful or not.
-   * @return 
-   */
-  public com.smartconsultor.microservice.account.rxjava.service.AccountService retrieveAccount(java.lang.String id, io.vertx.core.Handler<io.vertx.core.AsyncResult<com.smartconsultor.microservice.account.model.Account>> resultHandler) { 
-    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.retrieveAccount(id, resultHandler));
-    return ret;
-  }
-
-  /**
    * Initialize the persistence.
    * @param resultHandler the result handler will be called as soon as the initialization has been accomplished. The async result indicates whether the operation was successful or not.
    * @return 
@@ -159,6 +106,49 @@ public class AccountService {
   }
 
   /**
+   * Retrieve the user account with certain `id`.
+   * @param id user account id
+   * @param resultHandler the result handler will be called as soon as the user has been retrieved. The async result indicates whether the operation was successful or not.
+   * @return 
+   */
+  public com.smartconsultor.microservice.account.rxjava.service.AccountService retrieveAccount(java.lang.String id, io.vertx.core.Handler<io.vertx.core.AsyncResult<com.smartconsultor.microservice.account.model.Account>> resultHandler) { 
+    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.retrieveAccount(id, resultHandler));
+    return ret;
+  }
+
+  /**
+   * Retrieve the user account with certain `username`.
+   * @param username username
+   * @param resultHandler the result handler will be called as soon as the user has been retrieved. The async result indicates whether the operation was successful or not.
+   * @return 
+   */
+  public com.smartconsultor.microservice.account.rxjava.service.AccountService retrieveByUsername(java.lang.String username, io.vertx.core.Handler<io.vertx.core.AsyncResult<com.smartconsultor.microservice.account.model.Account>> resultHandler) { 
+    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.retrieveByUsername(username, resultHandler));
+    return ret;
+  }
+
+  /**
+   * Retrieve all user accounts.
+   * @param resultHandler the result handler will be called as soon as the users have been retrieved. The async result indicates whether the operation was successful or not.
+   * @return 
+   */
+  public com.smartconsultor.microservice.account.rxjava.service.AccountService retrieveAllAccounts(io.vertx.core.Handler<io.vertx.core.AsyncResult<java.util.List<com.smartconsultor.microservice.account.model.Account>>> resultHandler) { 
+    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.retrieveAllAccounts(resultHandler));
+    return ret;
+  }
+
+  /**
+   * Update user account info.
+   * @param account a account entity that we want to update
+   * @param resultHandler the result handler will be called as soon as the account has been added. The async result indicates whether the operation was successful or not.
+   * @return 
+   */
+  public com.smartconsultor.microservice.account.rxjava.service.AccountService updateAccount(com.smartconsultor.microservice.account.model.Account account, io.vertx.core.Handler<io.vertx.core.AsyncResult<com.smartconsultor.microservice.account.model.Account>> resultHandler) { 
+    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.updateAccount(account, resultHandler));
+    return ret;
+  }
+
+  /**
    * Delete a user account from the persistence
    * @param id user account id
    * @param resultHandler the result handler will be called as soon as the user has been removed. The async result indicates whether the operation was successful or not.
@@ -170,13 +160,23 @@ public class AccountService {
   }
 
   /**
-   * The address on which the service is published.
+   * Delete all user accounts from the persistence
+   * @param resultHandler the result handler will be called as soon as the users have been removed. The async result indicates whether the operation was successful or not.
+   * @return 
    */
-  public static final java.lang.String SERVICE_ADDRESS = com.smartconsultor.microservice.account.service.AccountService.SERVICE_ADDRESS;
+  public com.smartconsultor.microservice.account.rxjava.service.AccountService deleteAllAccounts(io.vertx.core.Handler<io.vertx.core.AsyncResult<java.lang.Void>> resultHandler) { 
+    com.smartconsultor.microservice.account.rxjava.service.AccountService ret = com.smartconsultor.microservice.account.rxjava.service.AccountService.newInstance((com.smartconsultor.microservice.account.service.AccountService)delegate.deleteAllAccounts(resultHandler));
+    return ret;
+  }
+
   /**
    * The name of the event bus service.
    */
   public static final java.lang.String SERVICE_NAME = com.smartconsultor.microservice.account.service.AccountService.SERVICE_NAME;
+  /**
+   * The address on which the service is published.
+   */
+  public static final java.lang.String SERVICE_ADDRESS = com.smartconsultor.microservice.account.service.AccountService.SERVICE_ADDRESS;
   public static AccountService newInstance(com.smartconsultor.microservice.account.service.AccountService arg) {
     return arg != null ? new AccountService(arg) : null;
   }
