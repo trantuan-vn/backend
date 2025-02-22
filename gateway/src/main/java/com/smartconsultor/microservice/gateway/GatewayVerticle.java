@@ -124,7 +124,7 @@ public class GatewayVerticle extends RestAPIVerticle {
           .removalListener((RemovalNotification<String, SockJSSocket> notification) -> {
               SockJSSocket socket = notification.getValue();
               if (socket != null) {
-                socket.close();
+                socket.close(); 
               }
           })
           .build();
