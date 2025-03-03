@@ -27,6 +27,7 @@ import org.apache.pulsar.client.api.SubscriptionType;
 
 import io.vertx.core.*;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.HttpClientOptions;
 import io.vertx.core.http.HttpServerRequest;
@@ -157,18 +158,18 @@ public class GatewayVerticle extends RestAPIVerticle {
   private void handleMessage(Consumer<byte[]> consumer, org.apache.pulsar.client.api.Message<byte[]> msg) {
     try {
         JsonObject json = new JsonObject(new String(msg.getData()));
-        String socketId = json.getString("socketId");
+        String username = json.getString("username");
         String response = json.getString("data");
 
-        SockJSSocket ws = clientSockets.getIfPresent(socketId);
+        SockJSSocket ws = clientSockets.getIfPresent(username);
         if (ws != null && ws.writeHandlerID() != null) {
             byte[] compressedPayload = compressBrotli(response);
             ws.write(Buffer.buffer(compressedPayload));
             consumer.acknowledge(msg);
         }
         else {
-          logger.warn("Kết nối WebSocket không hợp lệ hoặc đã đóng cho socketId: {}", socketId);
-          clientSockets.invalidate(socketId);
+          logger.warn("Kết nối WebSocket không hợp lệ hoặc đã đóng cho socketId của user : {}", username);
+          clientSockets.invalidate(username);
           consumer.negativeAcknowledge(msg);
         } 
     } catch (Exception e) {
@@ -293,50 +294,77 @@ public class GatewayVerticle extends RestAPIVerticle {
 
     router.route("/eventbus*").subRouter(ebHandler.bridge(optsSockJSBridge, event -> { 
       if (event.type() == BridgeEventType.SOCKET_CREATED) {
-        // lấy clientIp
-        String clientIp = event.socket().remoteAddress().host();
-        // Giới hạn số lượng kết nối theo IP
-        ipConnections.putIfAbsent(clientIp, new AtomicInteger(0));
-        if (ipConnections.get(clientIp).incrementAndGet() > jsonWebsocket.getInteger("max_connections_per_ip")) {
-            logger.warn("IP {} đã vượt quá giới hạn kết nối!", clientIp);
-            event.socket().close();
-            event.complete(false);
-            return;
-        }
-        // Khi đóng kết nối, giảm số lượng
-        event.socket().closeHandler(v -> {
-          if (ipConnections.get(clientIp).decrementAndGet() == 0) {
-            ipConnections.remove(clientIp);
-          }
-        });
-        // lấy socketId
-        String socketId = event.socket().writeHandlerID();
-        // Nếu chưa quá giới hạn, lưu socket vào danh sách
-        clientSockets.put(socketId, event.socket());
-        logger.info("Socket {} được tạo, tổng số kết nối: {}", socketId, clientSockets.size());
+       // Lấy IP của client
+       String clientIp = event.socket().remoteAddress().host();
+       ipConnections.putIfAbsent(clientIp, new AtomicInteger(0));
+       if (ipConnections.get(clientIp).incrementAndGet() > jsonWebsocket.getInteger("max_connections_per_ip")) {
+           logger.warn("IP {} đã vượt quá giới hạn kết nối!", clientIp);
+           event.socket().close();
+           event.complete(false);
+           return;
+       }
+       event.socket().closeHandler(v -> {
+         if (ipConnections.get(clientIp).decrementAndGet() == 0) {
+           ipConnections.remove(clientIp);
+         }
+       });
+   
+       // Lấy user từ Keycloak
+       User user = event.socket().webUser();
+       if (user == null) {
+         logger.warn("Không tìm thấy thông tin người dùng từ Keycloak!");
+         event.complete(false);
+         return;
+       }
+   
+       String username = user.principal().getString("preferred_username");
+       if (username == null || username.isEmpty()) {
+         logger.warn("Không tìm thấy preferred_username trong token Keycloak!");
+         event.complete(false);
+         return;
+       }
+   
+       // Lưu socket theo username
+       clientSockets.put(username, event.socket());
+       logger.info("Socket được tạo cho user {}, tổng số kết nối: {}", username, clientSockets.size());
+   
         // This signals that it's ok to process the event
         event.complete(true);               
       } else if (event.type() == BridgeEventType.SOCKET_CLOSED) {
-        String socketId = event.socket().writeHandlerID();
-        if (clientSockets.asMap().containsKey(socketId)) {
-          clientSockets.invalidate(socketId);
+        User user = event.socket().webUser();
+        if (user != null) {
+          String username = user.principal().getString("preferred_username");
+          if (username != null && clientSockets.asMap().containsKey(username)) {
+            clientSockets.invalidate(username);
+            logger.info("Socket của user {} đã đóng và bị xóa khỏi cache", username);
+          }
         }
-        logger.info("Socket {} đã đóng và bị xóa khỏi cache", socketId);
-        event.complete(true);              
+        event.complete(true);                 
       } else if (event.type() == BridgeEventType.RECEIVE) {
         try {
-          String socketId = event.socket().writeHandlerID();
+          User user = event.socket().webUser();
+          if (user == null) {
+            logger.warn("Không tìm thấy thông tin người dùng từ Keycloak!");
+            event.complete(false);
+            return;
+          }
+          String username = user.principal().getString("preferred_username");
+          if (username == null || username.isEmpty()) {
+            logger.warn("Không tìm thấy preferred_username trong token Keycloak!");
+            event.complete(false);
+            return;
+          }
           // Giải nén dữ liệu
-          JsonObject json = new JsonObject(decompressBrotli(event.getRawMessage().getBinary("body")));
+          JsonObject json = new JsonObject(decompressBrotli(Base64.getDecoder().decode(event.getRawMessage().getString("body"))));
           // Kiểm tra dữ liệu đầu vào
           if (json == null || !json.containsKey("data")) {
-            logger.warn("Dữ liệu nhận được không hợp lệ từ socket {}", socketId);
+            logger.warn("Dữ liệu nhận được không hợp lệ từ socket của user {}", username);
             event.complete(false);
             return;
           }
           String payload = json.getString("data"); 
           if (payload.length() > jsonWebsocket.getInteger("max_payload_size")) {
-            logger.warn("Payload từ socket {} quá lớn ({}/{} bytes)", socketId, payload.length(), jsonWebsocket.getInteger("max_payload_size"));
+            logger.warn("Payload từ socket của user {} quá lớn ({}/{} bytes)", username, payload.length(), jsonWebsocket.getInteger("max_payload_size"));
             event.complete(false);
             return;
           }   
@@ -348,14 +376,14 @@ public class GatewayVerticle extends RestAPIVerticle {
           // 1️⃣ Kiểm tra timestamp (ngăn tin nhắn cũ)
           long currentTimestamp = System.currentTimeMillis();
           if (Math.abs(currentTimestamp - timestamp) > 30_000) {  // Chỉ cho phép trong 30s
-              logger.warn("Phát hiện Replay Attack: timestamp không hợp lệ từ socket {}", socketId);
+              logger.warn("Phát hiện Replay Attack: timestamp không hợp lệ từ socket của user {}", username);
               event.complete(false);
               return;
           }
   
           // 2️⃣ Kiểm tra nonce (tránh trùng lặp)
           if (nonce.isEmpty() || receivedNonces.asMap().containsKey(nonce)) {
-              logger.warn("Phát hiện Replay Attack từ socket {} với nonce trùng lặp: {}", socketId, nonce);
+              logger.warn("Phát hiện Replay Attack từ socket của user {} với nonce trùng lặp: {}", username, nonce);
               event.complete(false);
               return;
           }
@@ -364,21 +392,21 @@ public class GatewayVerticle extends RestAPIVerticle {
           // 3️⃣ Kiểm tra HMAC (bảo vệ toàn vẹn dữ liệu)
           String computedHmac = computeHmac(payload + timestamp + nonce, csrfSecret);
           if (!computedHmac.equals(receivedHmac)) {
-              logger.warn("Phát hiện tin nhắn giả mạo hoặc Replay Attack từ socket {}!", socketId);
+              logger.warn("Phát hiện tin nhắn giả mạo hoặc Replay Attack từ socket của user {}!", username);
               event.complete(false);
               return;
           }
 
           // Kiểm tra SQL Injection
           if (SQL_INJECTION_PATTERN.matcher(payload).matches()) {
-            logger.warn("Phát hiện SQL Injection từ socket {}: {}", socketId, payload);
+            logger.warn("Phát hiện SQL Injection từ socket của user {}: {}", username, payload);
             event.complete(false);
             return;
           }
 
           // Kiểm tra Command Injection
           if (CMD_INJECTION_PATTERN.matcher(payload).matches()) {
-              logger.warn("Phát hiện Command Injection từ socket {}: {}", socketId, payload);
+              logger.warn("Phát hiện Command Injection từ socket của user {}: {}", username, payload);
               event.complete(false);
               return;
           }          
@@ -387,12 +415,12 @@ public class GatewayVerticle extends RestAPIVerticle {
           String sanitizedPayload = StringEscapeUtils.escapeJson(payload);
           
           String message=new JsonObject()
-            .put("socketId", socketId)
+            .put("username", username)
             .put("gatewayId", gatewayId) // Định tuyến ngược
             .put("data", sanitizedPayload)
             .encode();
 
-          sendMessageWithRetry(socketId, message, 0, 3);
+          sendMessageWithRetry(username, message, 0, 3);
                               
           // This signals that it's ok to process the event
           event.complete(true);                
@@ -402,6 +430,15 @@ public class GatewayVerticle extends RestAPIVerticle {
         }
       }
     }));
+     
+    EventBus eb = vertx.eventBus();
+    // Register to listen for messages coming IN to the server
+    eb.consumer("chat.to.server").handler(message -> {
+      // Create a timestamp string
+      //String timestamp = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(Date.from(Instant.now()));
+      // Send the message back out to all clients with the timestamp prepended.
+      eb.publish("chat.to.client", message.body());
+    });      
     
     // protect "/login" and redirect to home page after successful authentication
     router.route("/login").handler(keycloakOAuth2).handler(ctx -> {
@@ -430,6 +467,7 @@ public class GatewayVerticle extends RestAPIVerticle {
     });    
   }
 
+  
   private String computeHmac(String data, String secretKey) throws Exception {
     Mac mac = Mac.getInstance("HmacSHA256"); // Chọn thuật toán HMAC-SHA256
     SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
@@ -438,20 +476,20 @@ public class GatewayVerticle extends RestAPIVerticle {
     return Base64.getEncoder().encodeToString(hmacBytes); // Mã hóa HMAC thành chuỗi
   }  
   
-  private void sendMessageWithRetry(String socketId, String message, int retryCount, int retryMax) {
+  private void sendMessageWithRetry(String username, String message, int retryCount, int retryMax) {
     if (retryCount > retryMax) { // Giới hạn số lần retry
         logger.error("Gửi tin nhắn thất bại sau {} lần retry: {}", retryMax, message);
         return;
     }
     producer.newMessage()
-      .key(socketId)
+      .key(username)
       .value(message.getBytes())
       .sendAsync()
       .thenRun(() -> logger.info("Tin nhắn đã gửi thành công: {}", message))
       .exceptionally(ex -> {
         int nextDelay = (int) Math.pow(2, retryCount) * 100; // 100ms, 200ms, 400ms...
         logger.warn("Lỗi khi gửi tin nhắn: {}, thử lại sau {}ms", ex.getMessage(), nextDelay);
-        vertx.setTimer(nextDelay, id -> sendMessageWithRetry(socketId, message, retryCount + 1, retryMax));
+        vertx.setTimer(nextDelay, id -> sendMessageWithRetry(username, message, retryCount + 1, retryMax));
         return null;
     });
   }  

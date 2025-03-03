@@ -66,6 +66,11 @@
         <artifactId>jvmbrotli</artifactId>
         <version>0.2.0</version>
     </dependency>      
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-auth-oauth2</artifactId>
+      <version>4.5.13</version>
+    </dependency>  
   </dependencies>
 
   <build>
