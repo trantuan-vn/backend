@@ -7,7 +7,6 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>com-smartconsultor-microservice-gateway</artifactId>
-  <version>1.0.0</version>
   <build>
     <plugins>
       <plugin>
@@ -23,14 +22,14 @@
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-codegen</artifactId>
-      <version>4.5.4</version>
+      <version>4.5.9</version>
       <classifier>processor</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-unit</artifactId>
-      <version>4.5.4</version>
+      <version>4.5.9</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -121,12 +120,18 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>com.google.dagger</groupId>
+      <artifactId>dagger-compiler</artifactId>
+      <version>2.56.2</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <properties>
-    <main.image>tuantahp/gateway</main.image>
-    <main.verticle>com.smartconsultor.cluster.GatewayVerticle</main.verticle>
-    <main.launcher>com.smartconsultor.cluster.GatewayLauncher</main.launcher>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <main.jdwp>5006</main.jdwp>
+    <main.image>tuantahp/gateway</main.image>
+    <main.verticle>com.smartconsultor.microservice.gateway.GatewayVerticle</main.verticle>
+    <main.launcher>com.smartconsultor.microservice.gateway.GatewayLauncher</main.launcher>
   </properties>
 </project>

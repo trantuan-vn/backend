@@ -1,0 +1,156 @@
+openapi: 3.0.3
+info:
+  title: Auth API
+  version: 1.0.0
+  description: API cho xác thực Keycloak (exchange code, refresh token, logout)
+
+paths:
+  /auth/exchange:
+    post:
+      summary: Exchange Authorization Code for Tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCodeRequest'
+      responses:
+        '200':
+          description: Tokens returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokens'
+        '4XX':
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '5XX':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+
+  /auth/refresh:
+    post:
+      summary: Refresh Access Token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: your-refresh-token
+              required:
+                - refreshToken
+      responses:
+        '200':
+          description: Tokens refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokens'
+        '4XX':
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '5XX':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+
+  /auth/logout:
+    post:
+      summary: Logout User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: your-refresh-token
+              required:
+                - refreshToken
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '4XX':
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '5XX':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+
+components:
+  schemas:
+    AuthCodeRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          example: authorization-code-from-keycloak
+        redirectUri:
+          type: string
+          format: uri
+          example: https://your-app/callback
+      required:
+        - code
+        - redirectUri
+
+    AuthTokens:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: access-token
+        refreshToken:
+          type: string
+          example: refresh-token
+        expiresIn:
+          type: integer
+          example: 3600
+        tokenType:
+          type: string
+          example: Bearer
+      required:
+        - accessToken
+        - refreshToken
+        - expiresIn
+        - tokenType
+
+    HttpError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Invalid request
+        error_description:
+          type: string
+          example: Some detailed error description

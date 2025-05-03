@@ -1,7 +1,0 @@
-com/smartconsultor/microservice/common/config/Log4jConfigurationServiceHandler.class
-com/smartconsultor/microservice/common/functional/Functional.class
-com/smartconsultor/microservice/common/package-info.class
-com/smartconsultor/microservice/common/utils/RequestUtil.class
-com/smartconsultor/microservice/common/config/ConfigRetrieverHelper.class
-com/smartconsultor/microservice/common/service/JdbcRepositoryWrapper.class
-com/smartconsultor/microservice/common/RestAPIVerticle.class

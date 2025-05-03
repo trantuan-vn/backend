@@ -18,59 +18,46 @@
     <main.verticle>com.smartconsultor.microservice.gateway.GatewayVerticle</main.verticle>
     <main.jdwp>5006</main.jdwp>
     <main.image>tuantahp/gateway</main.image>
+    
   </properties>
 
-  <dependencies>
+  <dependencies> 
     <dependency>
-      <groupId>com.smartconsultor</groupId>
-      <artifactId>com-smartconsultor-microservice-common</artifactId>
-      <version>${project.version}</version>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-client</artifactId>
+    </dependency>  
+    <!-- either domain -->
+    <dependency>
+      <groupId>io.vavr</groupId>
+      <artifactId>vavr</artifactId>
+      <version>0.10.6</version>
     </dependency>
+    <!-- openapi-->
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-openapi</artifactId>
+    </dependency> 
+    <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-web-openapi-router</artifactId>
+    </dependency>    
     <!-- oauth2 -->
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-auth-oauth2</artifactId>
     </dependency>
-    <!-- sstore-infinispan -->
+    <!-- jose-jwt -->
     <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-web-sstore-infinispan</artifactId>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>10.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.18.3</version>
     </dependency>    
-    <!-- metrics-prometheus -->
-    <dependency>
-        <groupId>io.vertx</groupId>
-        <artifactId>vertx-micrometer-metrics</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>io.micrometer</groupId>
-        <artifactId>micrometer-registry-prometheus</artifactId>
-        <version>1.10.5</version>
-    </dependency>  
-    <dependency>
-      <groupId>org.apache.pulsar</groupId>
-      <artifactId>pulsar-client</artifactId>
-      <version>2.11.0</version>
-    </dependency>     
-    <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-text</artifactId>
-        <version>1.13.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>32.0.0-jre</version>
-    </dependency>  
-    <dependency>
-        <groupId>com.nixxcode.jvmbrotli</groupId>
-        <artifactId>jvmbrotli</artifactId>
-        <version>0.2.0</version>
-    </dependency>      
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-auth-oauth2</artifactId>
-      <version>4.5.13</version>
-    </dependency>  
   </dependencies>
 
   <build>
