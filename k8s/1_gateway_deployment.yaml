@@ -1,0 +1,200 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: gateway
+  namespace: microservices
+  labels:
+    app: gateway
+    version: v1
+spec:
+  replicas: 3
+  serviceName: "gateway-headless"
+  selector:
+    matchLabels:
+      app: gateway
+      version: v1
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: gateway
+        version: v1
+    spec:
+      serviceAccountName: microservice-gateway
+      initContainers:
+        - name: sysctl-config
+          image: busybox:1.35
+          securityContext:
+            privileged: true
+          command:
+            - sh
+            - -c
+            - |
+              SYSCTL_CONF="/etc/sysctl.conf"
+              TMP_CONF="/tmp/sysctl_custom.conf"
+              cat <<EOF > "$TMP_CONF"
+              # File/Connection limits
+              fs.file-max = 2097152
+              fs.nr_open = 2097152
+              vm.max_map_count = 262144
+              # TCP keepalive (duy trì kết nối sống)
+              net.ipv4.tcp_keepalive_time = 30
+              net.ipv4.tcp_keepalive_intvl = 10
+              net.ipv4.tcp_keepalive_probes = 3
+              # Port range mở rộng để nhiều kết nối outbound
+              net.ipv4.ip_local_port_range = 10000 65535
+              # TIME_WAIT reuse: tránh tốn slot
+              net.ipv4.tcp_tw_reuse = 1
+              net.ipv4.tcp_fin_timeout = 15
+              # Backlog cho kết nối vào
+              net.core.somaxconn = 65535
+              net.ipv4.tcp_max_syn_backlog = 8192
+              net.core.netdev_max_backlog = 65535
+              # Syncookie (giảm SYN flood)
+              net.ipv4.tcp_syncookies = 1
+              # Tăng buffer TCP
+              net.core.rmem_max = 16777216
+              net.core.wmem_max = 16777216
+              net.ipv4.tcp_rmem = 4096 87380 16777216
+              net.ipv4.tcp_wmem = 4096 65536 16777216
+              # Bypass reverse path filtering (tuỳ trường hợp)
+              net.ipv4.conf.all.rp_filter = 0
+              net.ipv4.conf.default.rp_filter = 0
+              # Tăng connection tracking nếu có iptables/nftables
+              net.netfilter.nf_conntrack_max = 2097152
+              EOF
+
+              for KEY in $(cut -d '=' -f 1 "$TMP_CONF" | xargs); do
+                sed -i "/^$KEY\s*=/d" "$SYSCTL_CONF"
+              done
+              cat "$TMP_CONF" >> "$SYSCTL_CONF"
+              sysctl -p "$SYSCTL_CONF"
+
+              ulimit -n 200000
+          volumeMounts:
+            - name: sysctl
+              mountPath: /etc/sysctl.conf
+              subPath: sysctl.conf
+              readOnly: false
+      containers:
+        - name: gateway
+          image: tuantahp/gateway
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: "2000m"
+              memory: "4Gi"
+            limits:
+              cpu: "3000m"
+              memory: "6Gi"    
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values:
+                          - gateway
+                  topologyKey: "kubernetes.io/hostname"                    
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: >
+                -agentlib:jdwp=transport=dt_socket,server=y,address=5006,suspend=n,quiet=y 
+            - name: JAVA_OPTS
+              value: >
+                -XX:+UseG1GC -Xms2g -Xmx4g
+                -Xms2g
+                -Xmx4g
+                -Dvertx.options.preferNativeTransport=true
+                -Djava.library.path=/usr/lib 
+                -Dio.netty.tryIoUring=true   
+                -XX:+UseStringDeduplication
+                -XX:+AlwaysPreTouch
+                -XX:+ParallelRefProcEnabled
+                -Dio.netty.recycler.maxCapacityPerThread=0   
+                -XX:MaxDirectMemorySize=2G 
+            - name: REPLICAS_COUNT
+              value: "3"
+          volumeMounts:              
+            - name: tls-secret
+              mountPath: /etc/tls
+              readOnly: true              
+          ports:
+            - containerPort: 8080
+            - containerPort: 5006
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            failureThreshold: 1
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /readiness
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 10
+      volumes:
+        - name: sysctl
+          hostPath:
+            path: /etc/sysctl.conf
+            type: File
+        - name: tls-secret
+          secret:
+            secretName: smartconsultor-certificate-tls
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: gateway-hpa
+  namespace: microservices
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: gateway
+  minReplicas: 3
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60  # hạ xuống để scale sớm, tránh nghẽn
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70  # thêm theo memory vì WebSocket giữ state trong RAM
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60     # chờ 1 phút để chắc chắn mới tăng pod
+      selectPolicy: Max
+      policies:
+        - type: Percent
+          value: 33                      # tăng tối đa 33% số pod hiện tại (VD: từ 3 → 4)
+          periodSeconds: 30
+        - type: Pods
+          value: 1                       # tối đa tăng 1 pod mỗi 30s
+          periodSeconds: 30
+    scaleDown:
+      stabilizationWindowSeconds: 300    # chờ 5 phút mới bắt đầu giảm (để người dùng reconnect)
+      selectPolicy: Max
+      policies:
+        - type: Percent
+          value: 25                      # giảm tối đa 25% mỗi 60s
+          periodSeconds: 60
+        - type: Pods
+          value: 1                       # giảm tối đa 1 pod mỗi 60s
+          periodSeconds: 60
+

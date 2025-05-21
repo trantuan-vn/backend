@@ -9,8 +9,6 @@ import javax.inject.Singleton;
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
 
-import com.smartconsultor.microservice.gateway.adapter.service.PulsarService;
-import com.smartconsultor.microservice.gateway.adapter.service.WebSocketManager;
 import com.smartconsultor.microservice.gateway.adapter.web.handler.AuthHandler;
 import com.smartconsultor.microservice.gateway.adapter.web.middle.ValidateAccessTokenHandler;
 import com.smartconsultor.microservice.gateway.adapter.web.route.AuthRouter;
@@ -21,6 +19,8 @@ import com.smartconsultor.microservice.gateway.application.usecases.auth.Refresh
 import com.smartconsultor.microservice.gateway.application.usecases.auth.ValidateAccessTokenUseCase;
 import com.smartconsultor.microservice.gateway.domain.repository.AuthRepository;
 import com.smartconsultor.microservice.gateway.infrastructure.datasources.remote.auth.AuthRemoteDataSource;
+import com.smartconsultor.microservice.gateway.infrastructure.service.PulsarService;
+import com.smartconsultor.microservice.gateway.infrastructure.service.WebSocketManager;
 import com.smartconsultor.microservice.gateway.verticle.GatewayVerticle;
 import com.smartconsultor.microservice.gateway.verticle.config.AppConfig;
 
@@ -35,12 +35,8 @@ public interface GatewayComponent {
     void inject(AppConfig appConfig);
     // Webclient
     void inject(WebClient webClient);
-    // Pulsar
-    void inject(PulsarClient pulsarClient);
-    void inject(Producer<byte[]> producer);
     // WebSocketManager
     void inject(WebSocketManager webSocketManager);
-    
     // WebSocketHandler
     void inject(WebSocketHandler webSocketHandler);
     // infra for all websocket function
@@ -61,4 +57,21 @@ public interface GatewayComponent {
     // infra for all auth function
     void inject(AuthRemoteDataSource authRemoteDataSource);    
     void inject(AuthRepository authRepository); 
+
+    // --- Getter Methods (constructor or method access) ---
+    Vertx vertx();
+    WebClient webClient();
+    PulsarService pulsarService();
+    WebSocketManager webSocketManager();
+    AuthRouter authRouter();
+    AppConfig appConfig();
+    WebSocketHandler webSocketHandler();
+    AuthHandler authHandler();
+    ExchangeCodeUseCase exchangeCodeUseCase();
+    RefreshUseCase refreshUseCase();
+    LogoutUseCase logoutUseCase();
+    ValidateAccessTokenHandler validateAccessTokenHandler();
+    ValidateAccessTokenUseCase validateAccessTokenUseCase();
+    AuthRemoteDataSource authRemoteDataSource();
+    AuthRepository authRepository();
 }    

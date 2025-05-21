@@ -11,6 +11,9 @@ public class PulsarConfig {
     private int operationTimeout;
     private int keepAliveInterval;
     private int receiverQueueSize;
+    private int rateLimit;
+    private int backpressureThreshold;
+    
 
     public PulsarConfig() {}
     public String getUrl() { return url; }
@@ -23,4 +26,7 @@ public class PulsarConfig {
     public int getOperationTimeout() { return operationTimeout; }
     public int getKeepAliveInterval() { return keepAliveInterval; }
     public int getReceiverQueueSize() { return receiverQueueSize; }
+    public int getRateLimit() { return rateLimit;}
+    public int getBackpressureThreshold() { return backpressureThreshold;}
+
 }

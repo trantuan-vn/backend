@@ -1,9 +1,9 @@
 package com.smartconsultor.microservice.gateway.verticle.di;
 
-import com.smartconsultor.microservice.gateway.adapter.service.PulsarService;
-import com.smartconsultor.microservice.gateway.adapter.service.WebSocketManager;
 import com.smartconsultor.microservice.gateway.adapter.websocket.WebSocketHandler;
 import com.smartconsultor.microservice.gateway.application.usecases.auth.ValidateAccessTokenUseCase;
+import com.smartconsultor.microservice.gateway.infrastructure.service.PulsarService;
+import com.smartconsultor.microservice.gateway.infrastructure.service.WebSocketManager;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.Preconditions;

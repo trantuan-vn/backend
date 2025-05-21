@@ -2,7 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>com.smartconsultor</groupId>
   <artifactId>com-smartconsultor-microservice</artifactId>
   <version>1.0.0</version>
@@ -10,19 +12,21 @@
 
   <modules>
     <module>gateway</module>
+    <module>business</module>
   </modules>
 
   <properties>
     <java.version>23</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
     <maven.shade.plugin.version>3.6.0</maven.shade.plugin.version>
-    <vertx.version>4.5.9</vertx.version>
     <jib.maven.plugin.version>3.4.3</jib.maven.plugin.version>
+    <vertx.version>4.5.9</vertx.version>
+    <pulsar.version>4.0.4</pulsar.version>
     <main.verticle/>
     <main.launcher/>
     <main.jdwp/>
     <main.image/>
-    <pulsar.version>4.0.4</pulsar.version>
   </properties>
 
   <dependencyManagement>
@@ -34,70 +38,65 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>io.vertx</groupId>
-        <artifactId>vertx-dependencies</artifactId>
-        <version>${vertx.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>      
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>org.apache.pulsar</groupId>
-      <artifactId>pulsar-client</artifactId>
-      <version>${pulsar.version}</version>
-    </dependency>    
+    <!-- Vert.x core -->
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
-    </dependency>    
+    </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-web</artifactId>
-    </dependency>    
-    <!-- vertx-codegen -->
+    </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-codegen</artifactId>
     </dependency>
+
+    <!-- Apache Pulsar -->
+    <dependency>
+      <groupId>org.apache.pulsar</groupId>
+      <artifactId>pulsar-client</artifactId>
+      <version>${pulsar.version}</version>
+    </dependency>
+
     <!-- Dagger -->
     <dependency>
-        <groupId>com.google.dagger</groupId>
-        <artifactId>dagger</artifactId>
-        <version>2.56.2</version>
+      <groupId>com.google.dagger</groupId>
+      <artifactId>dagger</artifactId>
+      <version>2.56.2</version>
     </dependency>
     <dependency>
-        <groupId>com.google.dagger</groupId>
-        <artifactId>dagger-compiler</artifactId>
-        <version>2.56.2</version>      
+      <groupId>com.google.dagger</groupId>
+      <artifactId>dagger-compiler</artifactId>
+      <version>2.56.2</version>
     </dependency>
-    <!-- SLF4J API -->
+
+    <!-- Logging -->
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
     </dependency>
-    <!-- Bridge SLF4J to Log4j2 -->
     <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-slf4j-impl</artifactId>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
     </dependency>
-    <!-- Log4j2 Core -->
     <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
     </dependency>
-    <!-- Log4j2 API -->
     <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-api</artifactId>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
     </dependency>
-  </dependencies>  
+  </dependencies>
 
   <build>
-    <plugins>      
+    <plugins>
+      <!-- Maven Compiler Plugin -->
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven.compiler.plugin.version}</version>
@@ -116,8 +115,8 @@
               <groupId>com.google.dagger</groupId>
               <artifactId>dagger-compiler</artifactId>
               <version>2.56.2</version>
-            </path>            
-          </annotationProcessorPaths>                
+            </path>
+          </annotationProcessorPaths>
         </configuration>
         <executions>
           <execution>
@@ -150,6 +149,7 @@
 
     <pluginManagement>
       <plugins>
+        <!-- Maven Shade Plugin -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
@@ -179,6 +179,7 @@
           </executions>
         </plugin>
 
+        <!-- Jib Plugin -->
         <plugin>
           <groupId>com.google.cloud.tools</groupId>
           <artifactId>jib-maven-plugin</artifactId>

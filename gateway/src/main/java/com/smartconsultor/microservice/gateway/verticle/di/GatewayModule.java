@@ -2,8 +2,6 @@ package com.smartconsultor.microservice.gateway.verticle.di;
 
 import javax.inject.Singleton;
 
-import com.smartconsultor.microservice.gateway.adapter.service.PulsarService;
-import com.smartconsultor.microservice.gateway.adapter.service.WebSocketManager;
 import com.smartconsultor.microservice.gateway.adapter.web.handler.AuthHandler;
 import com.smartconsultor.microservice.gateway.adapter.web.middle.ValidateAccessTokenHandler;
 import com.smartconsultor.microservice.gateway.adapter.web.route.AuthRouter;
@@ -16,10 +14,17 @@ import com.smartconsultor.microservice.gateway.domain.repository.AuthRepository;
 import com.smartconsultor.microservice.gateway.infrastructure.datasources.remote.auth.AuthRemoteDataSource;
 import com.smartconsultor.microservice.gateway.infrastructure.datasources.remote.auth.AuthRemoteDataSourceImpl;
 import com.smartconsultor.microservice.gateway.infrastructure.repositories.AuthRepositoryImpl;
+import com.smartconsultor.microservice.gateway.infrastructure.service.PulsarService;
+import com.smartconsultor.microservice.gateway.infrastructure.service.SlotManager;
+import com.smartconsultor.microservice.gateway.infrastructure.service.WebSocketManager;
+import com.smartconsultor.microservice.gateway.infrastructure.service.impl.PulsarServiceImpl;
+import com.smartconsultor.microservice.gateway.infrastructure.service.impl.SlotManagerImpl;
+import com.smartconsultor.microservice.gateway.infrastructure.service.impl.WebSocketManagerImpl;
 import com.smartconsultor.microservice.gateway.verticle.config.AppConfig;
 
 import dagger.Provides;
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
 import dagger.Module;
@@ -30,7 +35,11 @@ public class GatewayModule {
     @Provides
     @Singleton
     public Vertx provideVertx() {
-        return Vertx.vertx();  // Cung cấp đối tượng Vertx
+        VertxOptions options = new VertxOptions()
+            .setWorkerPoolSize(20)  // Cấu hình số lượng worker threads
+            .setEventLoopPoolSize(4)  // Cấu hình số lượng event loop threads        
+            .setPreferNativeTransport(true);
+        return Vertx.vertx(options);
     }
 
     @Provides
@@ -41,14 +50,20 @@ public class GatewayModule {
 
     @Provides
     @Singleton
-    public WebSocketManager provideWebSocketManager() {
-        return new WebSocketManager();
+    public WebSocketManager provideWebSocketManager(Vertx vertx) {
+        return new WebSocketManagerImpl(vertx);
     }    
 
     @Provides
     @Singleton
-    public PulsarService providePulsarService(AppConfig appConfig, WebSocketManager webSocketManager) {
-        return new PulsarService(appConfig,webSocketManager);
+    public SlotManager provideSlotManager(AppConfig appConfig) {
+        return new SlotManagerImpl(appConfig);
+    }  
+
+    @Provides
+    @Singleton
+    public PulsarService providePulsarService(Vertx vertx, AppConfig appConfig, WebSocketManager webSocketManager, SlotManager slotManager) {
+        return new PulsarServiceImpl(vertx, appConfig, webSocketManager, slotManager);
     }    
 
     @Provides

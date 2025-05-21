@@ -1,0 +1,157 @@
+syntax = "proto3";
+
+package gateway;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// --- Message Definitions ---
+
+message SyncRequest {
+  string seqId = 1;
+}
+
+message AckMessage {
+  string seqId = 1;
+  optional string ackStatus = 2;
+  optional google.protobuf.Timestamp receivedAt = 3;
+}
+
+message SendMessage {
+  string messageId = 1;
+  string content = 2;
+  string receipt = 3;
+}
+
+message EventMessage {
+  enum EventType {
+    MESSAGE_RECEIVED = 0;
+    MESSAGE_SENT = 1;
+    MESSAGE_FAILED = 2;
+    MESSAGE_DELETED = 3;
+
+    SESSION_KICKED = 4;
+    SESSION_EXPIRED = 5;
+    SESSION_CONFLICT = 6;
+
+    SECURITY_TOKEN_EXPIRED = 7;
+    SECURITY_SUSPICIOUS_LOGIN = 8;
+    SECURITY_PERMISSION_DENIED = 9;
+
+    ORDER_PLACED = 10;
+    ORDER_CANCELLED = 11;
+    NOTIFICATION_COUNT_UPDATED = 12;
+
+    UI_THEME_UPDATE = 13;
+    CONFIG_RELOAD = 14;
+    METRIC_UPDATE = 15;
+
+    SYSTEM_RECONNECTED = 16;
+    SYSTEM_DISCONNECTED = 17;
+    SYSTEM_MAINTENANCE = 18;
+    SYSTEM_UPGRADE = 19;
+    UNKNOWN_EVENT = 20;
+  }
+
+  EventType event_type = 1;
+  google.protobuf.Timestamp timestamp = 2;
+
+  oneof details {
+    MessageEventDetails message = 3;
+    SessionEventDetails session = 4;
+    SecurityEventDetails security = 5;
+    BusinessEventDetails business = 6;
+    UiEventDetails ui = 7;
+    SystemStatusDetails system = 8;
+  }
+}
+
+// --- Detail Payloads for Event Types ---
+
+message MessageEventDetails {
+  string messageId = 1;
+  string senderId = 2;
+  string receiverId = 3;
+  string content = 4;
+}
+
+message SessionEventDetails {
+  string userId = 1;
+  string reason = 2;
+}
+
+message SecurityEventDetails {
+  string userId = 1;
+  string action = 2;
+}
+
+message BusinessEventDetails {
+  string orderId = 1;
+  float totalAmount = 2;
+  repeated Item items = 3;
+}
+
+message Item {
+  string itemId = 1;
+  int32 quantity = 2;
+  float price = 3;
+}
+
+message UiEventDetails {
+  map<string, string> updates = 1;
+}
+
+message SystemStatusDetails {
+  string status = 1;
+  string reason = 2;
+}
+
+// --- Control and Error Messaging ---
+
+message ControlMessage {
+  string code = 1;
+  string message = 2;
+  int32 limit = 3;
+  int32 retryAfterMs = 4;
+}
+
+message HeartbeatMessage {
+  optional bool ping = 1;
+  optional bool pong = 2;
+  optional bool noop = 3;
+}
+
+message ErrorMessage {
+  string reason = 1;
+  string message = 2;
+}
+
+// --- Envelope for transport ---
+
+message Envelope {
+  enum EnvelopeType {
+    SYNC = 1;
+    ACK = 2;
+    SEND = 3;
+    NACK = 4;
+    EVENT = 5;
+    WARNING = 6;
+    THROTTLE = 7;
+    HEARTBEAT = 8;
+    ERROR = 9;
+    DISCONNECT = 10;
+    SYNC_UPDATE = 11;
+  }
+
+  EnvelopeType type = 1;
+
+  oneof payload {
+    SyncRequest sync_request = 2;
+    AckMessage ack_message = 3;
+    SendMessage send_message = 4;
+    EventMessage event_message = 5;
+    ControlMessage control_message = 6;
+    HeartbeatMessage heartbeat_message = 7;
+    ErrorMessage error_message = 8;
+  }
+}

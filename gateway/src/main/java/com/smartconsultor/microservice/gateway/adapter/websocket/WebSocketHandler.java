@@ -5,11 +5,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smartconsultor.microservice.gateway.adapter.service.PulsarService;
-import com.smartconsultor.microservice.gateway.adapter.service.WebSocketManager;
+import com.smartconsultor.microservice.gateway.adapter.dto.MessageRequest;
 import com.smartconsultor.microservice.gateway.application.usecases.auth.ValidateAccessTokenUseCase;
 import com.smartconsultor.microservice.gateway.common.error.Result;
 import com.smartconsultor.microservice.gateway.common.utils.AuthUtils;
+import com.smartconsultor.microservice.gateway.infrastructure.service.PulsarService;
+import com.smartconsultor.microservice.gateway.infrastructure.service.WebSocketManager;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
@@ -38,20 +39,47 @@ public class WebSocketHandler {
             if (ar.succeeded()) {
                 if (ar.result()) {
                     socket.accept();
-                    // registerSession
-                    webSocketManager.registerSession(socket);
+                    //
+                    final boolean[] initialized = {false};
+                    String socketId = socket.textHandlerID();
                     // handleIncomingMessage
                     socket.handler(buffer -> {
-            
-                        String message = buffer.toString();
-                        String socketId = socket.textHandlerID();
+                        JsonObject msg = buffer.toJsonObject();
+
+                        if (!initialized[0]) {
+                            // registerSession
+                            webSocketManager.registerSession(socket);                                
+                            if ("init".equals(msg.getString("type")) && msg.containsKey("seqId")) {
+                                long seqId = msg.getLong("seqId");
+                                // Trả lời ACK init
+                                webSocketManager.sendMessage(socketId, new JsonObject()
+                                    .put("type", "init_ack")
+                                    .put("seqId", seqId)
+                                    .encode());
+        
+                                initialized[0] = true;
+                            } else {
+                                // Reject nếu message đầu tiên không phải init
+                                webSocketManager.sendMessage(socketId, new JsonObject()
+                                    .put("type", "error")
+                                    .put("reason", "init_required")
+                                    .put("details", "First message must be of type 'init' with seqId")
+                                    .encode());
+                                socket.close();
+                                webSocketManager.removeSession(socket);
+                                
+                            }   
+                            return;                         
+                        }                                    
                         
-                        pulsarService.sendToTopic(socketId, new JsonObject(message))
+                        MessageRequest message = MessageRequest.fromJson(buffer.toString());                        
+                        
+                        pulsarService.sendToTopic(socketId, message)
                         .onSuccess(pulsarSuccess -> {
                             // Gửi ACK khi thành công
                             webSocketManager.sendMessage(socketId, new JsonObject()
                                 .put("type", "ack")
-                                .put("message", "Message successfully sent to Pulsar")
+                                .put("message", pulsarSuccess.toJson())
                                 .encode());
                         })
                         .onFailure(pulsarError -> {

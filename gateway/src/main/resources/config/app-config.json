@@ -4,19 +4,28 @@
     "host": "0.0.0.0",
     "max_payload_size": 5242880
   },
+  
+  "geoip": {
+    "db_path": "geoip/GeoLite2-City.mmdb",
+    "maximumSize": 100000,
+    "expireAfterWrite": 30 
+  },  
 
   "pulsar": {
     "url": "pulsar://pulsar-broker.pulsar.svc.cluster.local:6650",
     "adminUrl": "http://pulsar-broker.pulsar.svc.cluster.local:8080",
-    "connectionsPerBroker": 5, 
-    "numIoThreads": 4 ,
-    "numListenerThreads": 4,
-    "batchingMaxMessagesPerBatch": 100,
-    "batchingMaxPublishDelay": 10,
-    "operationTimeout": 5,
-    "keepAliveInterval": 10,
-    "receiverQueueSize": 500 
-  }, 
+    "connectionsPerBroker": 10,
+    "numIoThreads": 8,      
+    "numListenerThreads": 8,
+    "batchingMaxMessagesPerBatch": 500,
+    "batchingMaxPublishDelay": 5,   
+    "operationTimeout": 10,         
+    "keepAliveInterval": 30,        
+    "receiverQueueSize": 1000,      
+    "rateLimit": 20000,             
+    "backpressureThreshold": 25000  
+  },
+
   
   "websocket": {
     "max_connections_per_ip": 10,
@@ -42,5 +51,16 @@
       "secret": "eeC9YoPbjQoS8xVifHnQaIAxXCQZqyH9"
     },
     "callback_url": "https://smartconsultor.com/callback"
-  }
+  },
+
+  "redis": {
+    "host": "redis-master.redis.svc.cluster.local",
+    "port": 6379,
+    "password": "secret97", 
+    "database": 1,
+    "maxPoolSize": 10,
+    "maxWaitingHandlers": 32,
+    "poolRecycleTimeout": 3,
+    "poolCleanerInterval": 30
+  }  
 }

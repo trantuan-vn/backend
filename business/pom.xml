@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+
+  <parent> 
+    <groupId>com.smartconsultor</groupId>
+    <artifactId>com-smartconsultor-microservice</artifactId>
+    <version>1.0.0</version>    
+  </parent>
+
+  <artifactId>com-smartconsultor-microservice-business</artifactId>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <main.launcher>com.smartconsultor.microservice.gateway.GatewayLauncher</main.launcher>
+    <main.verticle>com.smartconsultor.microservice.gateway.GatewayVerticle</main.verticle>
+    <main.jdwp>5005</main.jdwp>
+    <main.image>tuantahp/business</main.image>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.pulsar</groupId>
+      <artifactId>pulsar-functions-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-pg-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.16.1</version>
+    </dependency>
+  </dependencies>
+</project>

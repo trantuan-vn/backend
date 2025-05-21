@@ -12,6 +12,9 @@ public class AppConfig {
     private WebsocketConfig websocket;
     private InfinispanConfig infinispan;
     private KeycloakConfig keycloak;
+    private RedisConfig redis; 
+    private EnvConfig env;
+    private GeoIPConfig geoip; // <-- thêm đây
 
     @Inject
     public AppConfig() {}
@@ -21,6 +24,10 @@ public class AppConfig {
     public WebsocketConfig getWebsocket() { return websocket; }
     public InfinispanConfig getInfinispan() { return infinispan; }
     public KeycloakConfig getKeycloak() { return keycloak; }
+    public RedisConfig getRedis() { return redis; } 
+    public EnvConfig getEnv() { return env; }
+    public GeoIPConfig getGeoip() { return geoip; }  // getter mới
+    public void setGeoip(GeoIPConfig geoip) { this.geoip = geoip; } // setter mới
 
     public static AppConfig load(String path) {
         try {
@@ -29,7 +36,13 @@ public class AppConfig {
             if (input == null) {
                 throw new RuntimeException("Config not found: " + path);
             }
-            return mapper.readValue(input, AppConfig.class);
+    
+            AppConfig config = mapper.readValue(input, AppConfig.class);
+                    
+            // Inject environment config
+            config.env = new EnvConfig();
+    
+            return config;
         } catch (Exception e) {
             throw new RuntimeException("Error loading config from file: " + path, e);
         }

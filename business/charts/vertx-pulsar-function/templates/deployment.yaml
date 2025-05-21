@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "vertx-pulsar-function.fullname" . }}
+  labels:
+    {{- include "vertx-pulsar-function.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "vertx-pulsar-function.name" . }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "vertx-pulsar-function.name" . }}
+    spec:
+      containers:
+        - name: vertx-pulsar-function
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            {{- toYaml .Values.env | nindent 12 }}

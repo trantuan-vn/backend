@@ -1,0 +1,34 @@
+replicaCount: 1
+
+image:
+  repository: my-docker-repo/vertx-pulsar-function
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  name: ""
+
+podSecurityContext: {}
+securityContext: {}
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env:
+  - name: POSTGRES_HOST
+    value: "postgres-service"
+  - name: POSTGRES_USER
+    value: "myuser"
+  - name: POSTGRES_PASSWORD
+    value: "mypassword"
+  - name: POSTGRES_DB
+    value: "mydb"
