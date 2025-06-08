@@ -62,5 +62,15 @@
     "maxWaitingHandlers": 32,
     "poolRecycleTimeout": 3,
     "poolCleanerInterval": 30
+  },
+
+  "rocksdb": {
+    "basePath": "/data/rocksdb",
+    "maxOpenFiles": 512,
+    "blockCacheSizeMB": 64,
+    "writeBufferSizeMB": 16,
+    "maxBackgroundFlushes": 2,
+    "maxBackgroundCompactions": 4
   }  
+  
 }

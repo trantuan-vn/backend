@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package com.smartconsultor.microservice.gateway.adapter.dto.common;
+
+option java_package = "com.smartconsultor.microservice.gateway.adapter.dto.common";
+option java_outer_classname = "MessageTypeOuter";
+option java_multiple_files = true;
+
+enum MessageType {
+  UNKNOWN = 0;
+  HANDSHAKE = 1;
+  RESUME = 2;
+  BUSINESS = 3;
+  ERROR = 4;
+  MIGRATE = 5;
+  HEARTBEAT = 6;
+  STATE_UPDATE = 7;
+}

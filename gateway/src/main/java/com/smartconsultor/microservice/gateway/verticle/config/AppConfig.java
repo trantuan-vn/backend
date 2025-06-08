@@ -15,7 +15,7 @@ public class AppConfig {
     private RedisConfig redis; 
     private EnvConfig env;
     private GeoIPConfig geoip; // <-- thêm đây
-
+    private RocksDBConfig rocksdb; // <-- thêm mới
     @Inject
     public AppConfig() {}
 
@@ -27,7 +27,7 @@ public class AppConfig {
     public RedisConfig getRedis() { return redis; } 
     public EnvConfig getEnv() { return env; }
     public GeoIPConfig getGeoip() { return geoip; }  // getter mới
-    public void setGeoip(GeoIPConfig geoip) { this.geoip = geoip; } // setter mới
+    public RocksDBConfig getRocksdb() { return rocksdb; } // getter
 
     public static AppConfig load(String path) {
         try {

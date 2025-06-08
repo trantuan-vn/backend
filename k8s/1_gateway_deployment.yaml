@@ -117,10 +117,10 @@ spec:
                 -XX:MaxDirectMemorySize=2G 
             - name: REPLICAS_COUNT
               value: "3"
-          volumeMounts:              
-            - name: tls-secret
-              mountPath: /etc/tls
-              readOnly: true              
+          #volumeMounts:              
+          #  - name: tls-secret
+          #    mountPath: /etc/tls
+          #    readOnly: true              
           ports:
             - containerPort: 8080
             - containerPort: 5006
@@ -147,9 +147,9 @@ spec:
           hostPath:
             path: /etc/sysctl.conf
             type: File
-        - name: tls-secret
-          secret:
-            secretName: smartconsultor-certificate-tls
+        #- name: tls-secret
+        #  secret:
+        #    secretName: smartconsultor-certificate-tls
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler

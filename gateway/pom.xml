@@ -45,6 +45,11 @@
       <groupId>io.vertx</groupId>
       <artifactId>vertx-auth-oauth2</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-auth-jwt</artifactId>
+    </dependency>
+
     <!-- jose-jwt 
     <dependency>
       <groupId>com.nimbusds</groupId>
@@ -76,6 +81,11 @@
       <groupId>com.github.ben-manes.caffeine</groupId>
       <artifactId>caffeine</artifactId>
       <version>3.1.8</version>
-    </dependency>         
+    </dependency>  
+    <dependency>
+      <groupId>org.rocksdb</groupId>
+      <artifactId>rocksdbjni</artifactId>
+      <version>8.10.0</version>
+    </dependency>           
   </dependencies>
 </project>

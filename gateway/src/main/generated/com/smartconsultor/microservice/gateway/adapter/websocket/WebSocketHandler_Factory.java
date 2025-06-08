@@ -1,8 +1,7 @@
 package com.smartconsultor.microservice.gateway.adapter.websocket;
 
 import com.smartconsultor.microservice.gateway.application.usecases.auth.ValidateAccessTokenUseCase;
-import com.smartconsultor.microservice.gateway.infrastructure.service.PulsarService;
-import com.smartconsultor.microservice.gateway.infrastructure.service.WebSocketManager;
+import com.smartconsultor.microservice.gateway.infrastructure.service.websocket.WebSocketManager;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.Provider;
@@ -29,33 +28,33 @@ import javax.annotation.processing.Generated;
 public final class WebSocketHandler_Factory implements Factory<WebSocketHandler> {
   private final Provider<ValidateAccessTokenUseCase> validateAccessTokenUseCaseProvider;
 
-  private final Provider<PulsarService> pulsarServiceProvider;
-
   private final Provider<WebSocketManager> webSocketManagerProvider;
+
+  private final Provider<GatewayDispatcher> dispatcherProvider;
 
   public WebSocketHandler_Factory(
       Provider<ValidateAccessTokenUseCase> validateAccessTokenUseCaseProvider,
-      Provider<PulsarService> pulsarServiceProvider,
-      Provider<WebSocketManager> webSocketManagerProvider) {
+      Provider<WebSocketManager> webSocketManagerProvider,
+      Provider<GatewayDispatcher> dispatcherProvider) {
     this.validateAccessTokenUseCaseProvider = validateAccessTokenUseCaseProvider;
-    this.pulsarServiceProvider = pulsarServiceProvider;
     this.webSocketManagerProvider = webSocketManagerProvider;
+    this.dispatcherProvider = dispatcherProvider;
   }
 
   @Override
   public WebSocketHandler get() {
-    return newInstance(validateAccessTokenUseCaseProvider.get(), pulsarServiceProvider.get(), webSocketManagerProvider.get());
+    return newInstance(validateAccessTokenUseCaseProvider.get(), webSocketManagerProvider.get(), dispatcherProvider.get());
   }
 
   public static WebSocketHandler_Factory create(
       Provider<ValidateAccessTokenUseCase> validateAccessTokenUseCaseProvider,
-      Provider<PulsarService> pulsarServiceProvider,
-      Provider<WebSocketManager> webSocketManagerProvider) {
-    return new WebSocketHandler_Factory(validateAccessTokenUseCaseProvider, pulsarServiceProvider, webSocketManagerProvider);
+      Provider<WebSocketManager> webSocketManagerProvider,
+      Provider<GatewayDispatcher> dispatcherProvider) {
+    return new WebSocketHandler_Factory(validateAccessTokenUseCaseProvider, webSocketManagerProvider, dispatcherProvider);
   }
 
   public static WebSocketHandler newInstance(ValidateAccessTokenUseCase validateAccessTokenUseCase,
-      PulsarService pulsarService, WebSocketManager webSocketManager) {
-    return new WebSocketHandler(validateAccessTokenUseCase, pulsarService, webSocketManager);
+      WebSocketManager webSocketManager, GatewayDispatcher dispatcher) {
+    return new WebSocketHandler(validateAccessTokenUseCase, webSocketManager, dispatcher);
   }
 }

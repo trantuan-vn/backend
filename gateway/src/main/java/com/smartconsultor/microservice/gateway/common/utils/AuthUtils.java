@@ -1,5 +1,6 @@
 package com.smartconsultor.microservice.gateway.common.utils;
 
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.Cookie;
 import io.vertx.core.http.ServerWebSocket;
 import io.vertx.core.json.JsonObject;
@@ -8,6 +9,9 @@ import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smartconsultor.microservice.gateway.adapter.dto.common.MessageType;
+import com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage;
+import com.smartconsultor.microservice.gateway.adapter.dto.gateway.GatewayMessage;
 import com.smartconsultor.microservice.gateway.common.error.Failure;
 import com.smartconsultor.microservice.gateway.common.error.HttpError;
 
@@ -88,19 +92,17 @@ public class AuthUtils {
         ctx.response().addCookie(accessCookie);
         ctx.response().addCookie(refreshCookie);
     }
-    /**
-     * Hàm reject handshake với status code + JSON body
-     */
-    public static void rejectHandshakeWithJson(ServerWebSocket handshake, int statusCode, String error, String message) {
-        if (!handshake.isClosed()) {
-            handshake.reject(statusCode);
-            try {
-                handshake.writeFinalTextFrame("{\"error\": \"" + error + "\", \"message\": \"" + message + "\"}");
-            } catch (Exception e) {
-                logger.warn("Failed to send JSON error response after rejecting WebSocket handshake", e);
-            }
-        } else {
-            logger.warn("Attempted to reject a closed WebSocket handshake");
-        }
-    }       
+    
+    public static void sendErrorAndClose(ServerWebSocket socket, int code, String reason) {
+        GatewayMessage errorMsg = GatewayMessage.newBuilder()
+                .setType(MessageType.ERROR)
+                .setError(ErrorMessage.newBuilder()
+                        .setCode(code)
+                        .setReason(reason)
+                        .build())
+                .build();
+        socket.writeBinaryMessage(Buffer.buffer(errorMsg.toByteArray()), ar -> {
+            socket.close(); // Gửi xong rồi mới đóng
+        });
+    }     
 }

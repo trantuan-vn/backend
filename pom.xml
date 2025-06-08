@@ -38,6 +38,11 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-java</artifactId>
+        <version>4.31.1</version>
+      </dependency>      
     </dependencies>
   </dependencyManagement>
 
@@ -92,20 +97,79 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
     </dependency>
+    <!-- Protobuf runtime -->
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>4.31.1</version>
+    </dependency>    
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Maven Compiler Plugin -->
+      <plugin>
+        <groupId>kr.motd.maven</groupId>
+        <artifactId>os-maven-plugin</artifactId>
+        <version>1.7.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>detect</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>      
+      <plugin>
+        <groupId>org.xolstice.maven.plugins</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+        <version>0.6.1</version>
+        <configuration>
+          <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+          <outputDirectory>${project.basedir}/src/main/generated</outputDirectory>
+          <protocArtifact>com.google.protobuf:protoc:3.19.6:exe:${os.detected.classifier}</protocArtifact> 
+          <!-- <protocArtifact>com.google.protobuf:protoc:4.31.1:exe:${os.detected.classifier}</protocArtifact> -->
+          <clearOutputDirectory>false</clearOutputDirectory> <!-- Không xóa thư mục -->
+        </configuration>
+        <executions>
+          <execution>
+            <id>compile-protobuf</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>add-generated-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.basedir}/src/main/generated</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven.compiler.plugin.version}</version>
+        <version>3.13.0</version>
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
           <encoding>${project.build.sourceEncoding}</encoding>
-          <generatedSourcesDirectory>src/main/generated</generatedSourcesDirectory>
-          <generatedTestSourcesDirectory>src/test/generated</generatedTestSourcesDirectory>
+          <generatedSourcesDirectory>${project.basedir}/src/main/generated</generatedSourcesDirectory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
           <annotationProcessorPaths>
             <path>
               <groupId>io.vertx</groupId>
@@ -121,11 +185,14 @@
         <executions>
           <execution>
             <id>default-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
             <configuration>
               <annotationProcessors>
                 <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
               </annotationProcessors>
-              <generatedSourcesDirectory>src/main/generated</generatedSourcesDirectory>
               <compilerArgs>
                 <arg>-Acodegen.output=${project.basedir}/src/main</arg>
               </compilerArgs>
@@ -133,18 +200,21 @@
           </execution>
           <execution>
             <id>default-testCompile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
             <configuration>
               <annotationProcessors>
                 <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
               </annotationProcessors>
-              <generatedTestSourcesDirectory>src/test/generated</generatedTestSourcesDirectory>
               <compilerArgs>
                 <arg>-Acodegen.output=${project.basedir}/src/test</arg>
               </compilerArgs>
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin>      
     </plugins>
 
     <pluginManagement>

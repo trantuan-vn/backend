@@ -9,4 +9,5 @@ public interface AuthRemoteDataSource {
     Future<AuthTokens> refreshToken(String refreshToken);
     Future<Boolean> logout(String refreshToken);
     Future<Boolean> validateAccessToken(String accessToken);
+    Future<Boolean> validateAccessTokenWithJwt(String accessToken);
 }

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package com.smartconsultor.microservice.gateway.adapter.dto.gateway;
+
+option java_package = "com.smartconsultor.microservice.gateway.adapter.dto.gateway";
+option java_outer_classname = "GatewayMessageOuter";
+option java_multiple_files = true;
+
+import "common/message_type.proto";
+import "gateway/handshake.proto";
+import "gateway/resume.proto";
+import "gateway/business.proto";
+import "gateway/error.proto";
+import "gateway/heartbeat.proto";
+
+message GatewayMessage {
+  com.smartconsultor.microservice.gateway.adapter.dto.common.MessageType type = 1;
+  string user_id = 2;
+  string device_id = 3;
+  string app_id = 4;
+  int32 connection_index = 5;
+  uint64 timestamp = 6;
+  uint64 ack_seq_id = 7; // client
+  string socket_id = 8; // textHandlerID
+
+  oneof payload {
+    HandshakeMessage handshake = 9;
+    ResumeMessage resume = 10;
+    BusinessMessageList business = 11;
+    ErrorMessage error = 12;
+    HeartbeatMessage heartbeat = 13;
+  }
+}

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package com.smartconsultor.microservice.business.domain.model;
+
+option java_package = "com.smartconsultor.microservice.business.domain.model";
+option java_outer_classname = "TransactionResultProto";
+option java_multiple_files = true;
+
+message TransactionResult {
+  string user_id = 1;
+  string transaction_id = 2;
+  string status = 3;
+  string message = 4;
+  int64 timestamp = 5;
+}

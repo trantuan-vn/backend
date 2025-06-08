@@ -9,4 +9,5 @@ public interface AuthRepository {
     Future<Result<AuthTokens>> refresh(String refreshToken);
     Future<Result<Boolean>> logout(String refreshToken);
     Future<Result<Boolean>> validateAccessToken(String accessToken);
+    Future<Result<Boolean>> validateAccessTokenWithJwt(String accessToken);
 }

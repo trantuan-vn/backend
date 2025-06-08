@@ -88,5 +88,20 @@ public class AuthRepositoryImpl implements AuthRepository {
                 return Future.succeededFuture(Result.failure(failure));
             });
     }
-    
+
+    @Override
+    public Future<Result<Boolean>> validateAccessTokenWithJwt(String accessToken) {
+        return remoteDataSource.validateAccessTokenWithJwt(accessToken)
+            .map(isValid -> Result.success(isValid)) 
+            .recover(err -> {
+                logger.error("Failed to validate access token [{}]: {}", accessToken, err.getMessage(), err);
+                Failure failure;
+                if (err instanceof Failure f) {
+                    failure = f; // nếu đã là Failure thì dùng luôn
+                } else {
+                    failure = new UnexpectedFailure(500, "Unexpected error when validating access token", err);
+                }
+                return Future.succeededFuture(Result.failure(failure));
+            });
+    }    
 }

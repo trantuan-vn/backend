@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
 
-  <parent> 
+  <parent>
     <groupId>com.smartconsultor</groupId>
     <artifactId>com-smartconsultor-microservice</artifactId>
     <version>1.0.0</version>    
@@ -19,9 +19,38 @@
     <main.verticle>com.smartconsultor.microservice.gateway.GatewayVerticle</main.verticle>
     <main.jdwp>5005</main.jdwp>
     <main.image>tuantahp/business</main.image>
-  </properties>
+    <flink.version>1.18.1</flink.version>
+  </properties> 
 
   <dependencies>
+    <!-- Flink Core Dependencies -->
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-core</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+
+    <!-- Flink Streaming API -->
+    <dependency>
+        <groupId>org.apache.flink</groupId>
+        <artifactId>flink-streaming-java</artifactId>
+        <version>2.0.0</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <!-- Flink Connector: Pulsar -->
+    <dependency>
+        <groupId>org.apache.flink</groupId>
+        <artifactId>flink-connector-pulsar</artifactId>
+        <version>4.1.0-1.18</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.pulsar</groupId>
+      <artifactId>pulsar-client</artifactId>
+      <version>3.2.0</version> <!-- hoặc phiên bản tương thích với flink-connector -->
+    </dependency>
+        
     <dependency>
       <groupId>org.apache.pulsar</groupId>
       <artifactId>pulsar-functions-api</artifactId>
@@ -34,9 +63,21 @@
     </dependency>
 
     <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-sql-client</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.16.1</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.typesafe</groupId>
+      <artifactId>config</artifactId>
+      <version>1.4.3</version>
+    </dependency>
+        
   </dependencies>
 </project>

@@ -16,6 +16,7 @@ public class ValidateAccessTokenUseCase {
     }
 
     public Future<Result<Boolean>> validate(String accessToken) {
-        return repository.validateAccessToken(accessToken);
+        //return repository.validateAccessToken(accessToken);
+        return repository.validateAccessTokenWithJwt(accessToken);
     }
 }
