@@ -2,7 +2,6 @@ package com.smartconsultor.microservice.business.di.component;
 
 import com.smartconsultor.microservice.business.FlinkJobRunner;
 import com.smartconsultor.microservice.business.adapter.flink.process.TransactionProcessFunction;
-import com.smartconsultor.microservice.business.application.usecase.DepositUseCase;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -17,6 +16,4 @@ public interface FlinkJobComponent {
     // Inject các lớp cần thiết ở đây
     void inject(TransactionProcessFunction processFunction);
     void inject(FlinkJobRunner jobRunner);
-
-    DepositUseCase getDepositUseCase();
 }

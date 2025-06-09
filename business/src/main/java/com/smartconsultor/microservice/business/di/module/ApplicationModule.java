@@ -9,10 +9,13 @@ import io.vertx.sqlclient.PoolOptions;
 
 import javax.inject.Singleton;
 
+import com.smartconsultor.microservice.business.adapter.config.BusinessDispatcherFactory;
+import com.smartconsultor.microservice.business.adapter.dispatcher.BusinessDispatcher;
 import com.smartconsultor.microservice.business.application.config.AppConfig;
 import com.smartconsultor.microservice.business.application.config.PostgresConfig;
 import com.smartconsultor.microservice.business.application.usecase.DepositUseCase;
 import com.smartconsultor.microservice.business.domain.repository.WalletRepository;
+import com.smartconsultor.microservice.business.domain.service.WalletService;
 import com.smartconsultor.microservice.business.infrastructure.repository.WalletRepositoryImpl;
 
 @Module
@@ -55,8 +58,14 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public DepositUseCase provideDepositUseCase(WalletRepository walletRepository) {
-        return new DepositUseCase(walletRepository);
+    public WalletService provideWalletService() {
+        return new WalletService();
+    }
+
+    @Singleton
+    @Provides
+    public BusinessDispatcher provideBusinessDispatcher() {
+        return BusinessDispatcherFactory.createDispatcher();
     }
 
 }

@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import com.smartconsultor.microservice.gateway.adapter.dto.common.MessageType;
-import com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList;
+import com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage;
 import com.smartconsultor.microservice.gateway.adapter.dto.gateway.GatewayMessage;
 import com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage;
 import com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage;
@@ -48,7 +48,7 @@ public class GatewayDispatcher {
                     ((GatewayUseCase<ResumeMessage>) useCase).handle(message.getResume(), ws, message);
                     break;
                 case BUSINESS:
-                    ((GatewayUseCase<BusinessMessageList>) useCase).handle(message.getBusiness(), ws, message);
+                    ((GatewayUseCase<BusinessMessage>) useCase).handle(message.getBusiness(), ws, message);
                     break;
                 case HEARTBEAT:
                     ((GatewayUseCase<HeartbeatMessage>) useCase).handle(message.getHeartbeat(), ws, message);

@@ -375,7 +375,7 @@ private static final long serialVersionUID = 0L;
 
   public static final int BUSINESS_FIELD_NUMBER = 11;
   /**
-   * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+   * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
    * @return Whether the business field is set.
    */
   @java.lang.Override
@@ -383,25 +383,25 @@ private static final long serialVersionUID = 0L;
     return payloadCase_ == 11;
   }
   /**
-   * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+   * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
    * @return The business.
    */
   @java.lang.Override
-  public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList getBusiness() {
+  public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage getBusiness() {
     if (payloadCase_ == 11) {
-       return (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList) payload_;
+       return (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage) payload_;
     }
-    return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
+    return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
   }
   /**
-   * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+   * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
    */
   @java.lang.Override
-  public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageListOrBuilder getBusinessOrBuilder() {
+  public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageOrBuilder getBusinessOrBuilder() {
     if (payloadCase_ == 11) {
-       return (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList) payload_;
+       return (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage) payload_;
     }
-    return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
+    return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
   }
 
   public static final int ERROR_FIELD_NUMBER = 12;
@@ -511,7 +511,7 @@ private static final long serialVersionUID = 0L;
       output.writeMessage(10, (com.smartconsultor.microservice.business.adapter.dto.gateway.ResumeMessage) payload_);
     }
     if (payloadCase_ == 11) {
-      output.writeMessage(11, (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList) payload_);
+      output.writeMessage(11, (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage) payload_);
     }
     if (payloadCase_ == 12) {
       output.writeMessage(12, (com.smartconsultor.microservice.business.adapter.dto.gateway.ErrorMessage) payload_);
@@ -566,7 +566,7 @@ private static final long serialVersionUID = 0L;
     }
     if (payloadCase_ == 11) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(11, (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList) payload_);
+        .computeMessageSize(11, (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage) payload_);
     }
     if (payloadCase_ == 12) {
       size += com.google.protobuf.CodedOutputStream
@@ -1914,9 +1914,9 @@ private static final long serialVersionUID = 0L;
     }
 
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.Builder, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageListOrBuilder> businessBuilder_;
+        com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.Builder, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageOrBuilder> businessBuilder_;
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      * @return Whether the business field is set.
      */
     @java.lang.Override
@@ -1924,27 +1924,27 @@ private static final long serialVersionUID = 0L;
       return payloadCase_ == 11;
     }
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      * @return The business.
      */
     @java.lang.Override
-    public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList getBusiness() {
+    public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage getBusiness() {
       if (businessBuilder_ == null) {
         if (payloadCase_ == 11) {
-          return (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList) payload_;
+          return (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage) payload_;
         }
-        return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
+        return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
       } else {
         if (payloadCase_ == 11) {
           return businessBuilder_.getMessage();
         }
-        return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
+        return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      */
-    public Builder setBusiness(com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList value) {
+    public Builder setBusiness(com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage value) {
       if (businessBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1958,10 +1958,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      */
     public Builder setBusiness(
-        com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.Builder builderForValue) {
+        com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.Builder builderForValue) {
       if (businessBuilder_ == null) {
         payload_ = builderForValue.build();
         onChanged();
@@ -1972,13 +1972,13 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      */
-    public Builder mergeBusiness(com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList value) {
+    public Builder mergeBusiness(com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage value) {
       if (businessBuilder_ == null) {
         if (payloadCase_ == 11 &&
-            payload_ != com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.getDefaultInstance()) {
-          payload_ = com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.newBuilder((com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList) payload_)
+            payload_ != com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.getDefaultInstance()) {
+          payload_ = com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.newBuilder((com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage) payload_)
               .mergeFrom(value).buildPartial();
         } else {
           payload_ = value;
@@ -1994,7 +1994,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      */
     public Builder clearBusiness() {
       if (businessBuilder_ == null) {
@@ -2013,38 +2013,38 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      */
-    public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.Builder getBusinessBuilder() {
+    public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.Builder getBusinessBuilder() {
       return getBusinessFieldBuilder().getBuilder();
     }
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      */
     @java.lang.Override
-    public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageListOrBuilder getBusinessOrBuilder() {
+    public com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageOrBuilder getBusinessOrBuilder() {
       if ((payloadCase_ == 11) && (businessBuilder_ != null)) {
         return businessBuilder_.getMessageOrBuilder();
       } else {
         if (payloadCase_ == 11) {
-          return (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList) payload_;
+          return (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage) payload_;
         }
-        return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
+        return com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+     * <code>.com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage business = 11;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.Builder, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageListOrBuilder> 
+        com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.Builder, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageOrBuilder> 
         getBusinessFieldBuilder() {
       if (businessBuilder_ == null) {
         if (!(payloadCase_ == 11)) {
-          payload_ = com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
+          payload_ = com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
         }
         businessBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList.Builder, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageListOrBuilder>(
-                (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageList) payload_,
+            com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage.Builder, com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessageOrBuilder>(
+                (com.smartconsultor.microservice.business.adapter.dto.gateway.BusinessMessage) payload_,
                 getParentForChildren(),
                 isClean());
         payload_ = null;

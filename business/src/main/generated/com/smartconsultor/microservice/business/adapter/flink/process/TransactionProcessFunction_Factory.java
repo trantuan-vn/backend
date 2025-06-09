@@ -1,6 +1,6 @@
 package com.smartconsultor.microservice.business.adapter.flink.process;
 
-import com.smartconsultor.microservice.business.application.usecase.DepositUseCase;
+import com.smartconsultor.microservice.business.adapter.dispatcher.BusinessDispatcher;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.Provider;
@@ -25,23 +25,23 @@ import javax.annotation.processing.Generated;
     "nullness:initialization.field.uninitialized"
 })
 public final class TransactionProcessFunction_Factory implements Factory<TransactionProcessFunction> {
-  private final Provider<DepositUseCase> depositUseCaseProvider;
+  private final Provider<BusinessDispatcher> dispatcherProvider;
 
-  public TransactionProcessFunction_Factory(Provider<DepositUseCase> depositUseCaseProvider) {
-    this.depositUseCaseProvider = depositUseCaseProvider;
+  public TransactionProcessFunction_Factory(Provider<BusinessDispatcher> dispatcherProvider) {
+    this.dispatcherProvider = dispatcherProvider;
   }
 
   @Override
   public TransactionProcessFunction get() {
-    return newInstance(depositUseCaseProvider.get());
+    return newInstance(dispatcherProvider.get());
   }
 
   public static TransactionProcessFunction_Factory create(
-      Provider<DepositUseCase> depositUseCaseProvider) {
-    return new TransactionProcessFunction_Factory(depositUseCaseProvider);
+      Provider<BusinessDispatcher> dispatcherProvider) {
+    return new TransactionProcessFunction_Factory(dispatcherProvider);
   }
 
-  public static TransactionProcessFunction newInstance(DepositUseCase depositUseCase) {
-    return new TransactionProcessFunction(depositUseCase);
+  public static TransactionProcessFunction newInstance(BusinessDispatcher dispatcher) {
+    return new TransactionProcessFunction(dispatcher);
   }
 }

@@ -26,7 +26,7 @@ message GatewayMessage {
   oneof payload {
     HandshakeMessage handshake = 9;
     ResumeMessage resume = 10;
-    BusinessMessageList business = 11;
+    BusinessMessage business = 11;
     ErrorMessage error = 12;
     HeartbeatMessage heartbeat = 13;
   }

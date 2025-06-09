@@ -33,7 +33,7 @@ public final class GatewayMessageOuter {
       "r.dto.gateway\032\031common/message_type.proto" +
       "\032\027gateway/handshake.proto\032\024gateway/resum" +
       "e.proto\032\026gateway/business.proto\032\023gateway" +
-      "/error.proto\032\027gateway/heartbeat.proto\"\350\005" +
+      "/error.proto\032\027gateway/heartbeat.proto\"\344\005" +
       "\n\016GatewayMessage\022V\n\004type\030\001 \001(\0162H.com.sma" +
       "rtconsultor.microservice.business.adapte" +
       "r.dto.common.MessageType\022\017\n\007user_id\030\002 \001(" +
@@ -44,17 +44,17 @@ public final class GatewayMessageOuter {
       ".microservice.business.adapter.dto.gatew" +
       "ay.HandshakeMessageH\000\022]\n\006resume\030\n \001(\0132K." +
       "com.smartconsultor.microservice.business" +
-      ".adapter.dto.gateway.ResumeMessageH\000\022e\n\010" +
-      "business\030\013 \001(\0132Q.com.smartconsultor.micr" +
+      ".adapter.dto.gateway.ResumeMessageH\000\022a\n\010" +
+      "business\030\013 \001(\0132M.com.smartconsultor.micr" +
       "oservice.business.adapter.dto.gateway.Bu" +
-      "sinessMessageListH\000\022[\n\005error\030\014 \001(\0132J.com" +
-      ".smartconsultor.microservice.business.ad" +
-      "apter.dto.gateway.ErrorMessageH\000\022c\n\thear" +
-      "tbeat\030\r \001(\0132N.com.smartconsultor.microse" +
-      "rvice.business.adapter.dto.gateway.Heart" +
-      "beatMessageH\000B\t\n\007payloadBU\n<com.smartcon" +
-      "sultor.microservice.business.adapter.dto" +
-      ".gatewayB\023GatewayMessageOuterP\001b\006proto3"
+      "sinessMessageH\000\022[\n\005error\030\014 \001(\0132J.com.sma" +
+      "rtconsultor.microservice.business.adapte" +
+      "r.dto.gateway.ErrorMessageH\000\022c\n\theartbea" +
+      "t\030\r \001(\0132N.com.smartconsultor.microservic" +
+      "e.business.adapter.dto.gateway.Heartbeat" +
+      "MessageH\000B\t\n\007payloadBU\n<com.smartconsult" +
+      "or.microservice.business.adapter.dto.gat" +
+      "ewayB\023GatewayMessageOuterP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

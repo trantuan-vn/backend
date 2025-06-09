@@ -127,19 +127,19 @@ public interface GatewayMessageOrBuilder extends
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessageOrBuilder getResumeOrBuilder();
 
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
    * @return Whether the business field is set.
    */
   boolean hasBusiness();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
    * @return The business.
    */
-  com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList getBusiness();
+  com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage getBusiness();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
    */
-  com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageListOrBuilder getBusinessOrBuilder();
+  com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageOrBuilder getBusinessOrBuilder();
 
   /**
    * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
