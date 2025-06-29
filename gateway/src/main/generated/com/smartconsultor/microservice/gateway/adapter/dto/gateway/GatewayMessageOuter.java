@@ -33,28 +33,32 @@ public final class GatewayMessageOuter {
       ".dto.gateway\032\031common/message_type.proto\032" +
       "\027gateway/handshake.proto\032\024gateway/resume" +
       ".proto\032\026gateway/business.proto\032\023gateway/" +
-      "error.proto\032\027gateway/heartbeat.proto\"\336\005\n" +
-      "\016GatewayMessage\022U\n\004type\030\001 \001(\0162G.com.smar" +
-      "tconsultor.microservice.gateway.adapter." +
-      "dto.common.MessageType\022\017\n\007user_id\030\002 \001(\t\022" +
-      "\021\n\tdevice_id\030\003 \001(\t\022\016\n\006app_id\030\004 \001(\t\022\030\n\020co" +
-      "nnection_index\030\005 \001(\005\022\021\n\ttimestamp\030\006 \001(\004\022" +
-      "\022\n\nack_seq_id\030\007 \001(\004\022\021\n\tsocket_id\030\010 \001(\t\022b" +
-      "\n\thandshake\030\t \001(\0132M.com.smartconsultor.m" +
-      "icroservice.gateway.adapter.dto.gateway." +
-      "HandshakeMessageH\000\022\\\n\006resume\030\n \001(\0132J.com" +
-      ".smartconsultor.microservice.gateway.ada" +
-      "pter.dto.gateway.ResumeMessageH\000\022`\n\010busi" +
-      "ness\030\013 \001(\0132L.com.smartconsultor.microser" +
-      "vice.gateway.adapter.dto.gateway.Busines" +
-      "sMessageH\000\022Z\n\005error\030\014 \001(\0132I.com.smartcon" +
-      "sultor.microservice.gateway.adapter.dto." +
-      "gateway.ErrorMessageH\000\022b\n\theartbeat\030\r \001(" +
-      "\0132M.com.smartconsultor.microservice.gate" +
-      "way.adapter.dto.gateway.HeartbeatMessage" +
-      "H\000B\t\n\007payloadBT\n;com.smartconsultor.micr" +
-      "oservice.gateway.adapter.dto.gatewayB\023Ga" +
-      "tewayMessageOuterP\001b\006proto3"
+      "error.proto\032\027gateway/heartbeat.proto\032\021ga" +
+      "teway/ack.proto\"\326\006\n\016GatewayMessage\022U\n\004ty" +
+      "pe\030\001 \001(\0162G.com.smartconsultor.microservi" +
+      "ce.gateway.adapter.dto.common.MessageTyp" +
+      "e\022\017\n\007user_id\030\002 \001(\t\022\021\n\tdevice_id\030\003 \001(\t\022\016\n" +
+      "\006app_id\030\004 \001(\t\022\030\n\020connection_index\030\005 \001(\005\022" +
+      "\021\n\ttimestamp\030\006 \001(\004\022\016\n\006domain\030\007 \001(\t\022\013\n\003po" +
+      "d\030\010 \001(\t\022\r\n\005topic\030\t \001(\t\022\021\n\tsocket_id\030\n \001(" +
+      "\t\022b\n\thandshake\030\013 \001(\0132M.com.smartconsulto" +
+      "r.microservice.gateway.adapter.dto.gatew" +
+      "ay.HandshakeMessageH\000\022\\\n\006resume\030\014 \001(\0132J." +
+      "com.smartconsultor.microservice.gateway." +
+      "adapter.dto.gateway.ResumeMessageH\000\022d\n\010b" +
+      "usiness\030\r \001(\0132P.com.smartconsultor.micro" +
+      "service.gateway.adapter.dto.gateway.Busi" +
+      "nessMessageListH\000\022Z\n\005error\030\016 \001(\0132I.com.s" +
+      "martconsultor.microservice.gateway.adapt" +
+      "er.dto.gateway.ErrorMessageH\000\022b\n\theartbe" +
+      "at\030\017 \001(\0132M.com.smartconsultor.microservi" +
+      "ce.gateway.adapter.dto.gateway.Heartbeat" +
+      "MessageH\000\022Z\n\003ack\030\020 \001(\0132K.com.smartconsul" +
+      "tor.microservice.gateway.adapter.dto.gat" +
+      "eway.AckMessageListH\000B\t\n\007payloadBT\n;com." +
+      "smartconsultor.microservice.gateway.adap" +
+      "ter.dto.gatewayB\023GatewayMessageOuterP\001b\006" +
+      "proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -65,19 +69,21 @@ public final class GatewayMessageOuter {
           com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessProto.getDescriptor(),
           com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessageOuter.getDescriptor(),
           com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessageOuter.getDescriptor(),
+          com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageOuter.getDescriptor(),
         });
     internal_static_com_smartconsultor_microservice_gateway_adapter_dto_gateway_GatewayMessage_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_com_smartconsultor_microservice_gateway_adapter_dto_gateway_GatewayMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_smartconsultor_microservice_gateway_adapter_dto_gateway_GatewayMessage_descriptor,
-        new java.lang.String[] { "Type", "UserId", "DeviceId", "AppId", "ConnectionIndex", "Timestamp", "AckSeqId", "SocketId", "Handshake", "Resume", "Business", "Error", "Heartbeat", "Payload", });
+        new java.lang.String[] { "Type", "UserId", "DeviceId", "AppId", "ConnectionIndex", "Timestamp", "Domain", "Pod", "Topic", "SocketId", "Handshake", "Resume", "Business", "Error", "Heartbeat", "Ack", "Payload", });
     com.smartconsultor.microservice.gateway.adapter.dto.common.MessageTypeOuter.getDescriptor();
     com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessageOuter.getDescriptor();
     com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessageOuter.getDescriptor();
     com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessProto.getDescriptor();
     com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessageOuter.getDescriptor();
     com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessageOuter.getDescriptor();
+    com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageOuter.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -4,6 +4,6 @@ import com.smartconsultor.microservice.gateway.adapter.dto.gateway.GatewayMessag
 
 import io.vertx.core.http.ServerWebSocket;
 
-public interface GatewayUseCase<T> {
-    void handle(T payload, ServerWebSocket ws, GatewayMessage rawMessage);
+public interface GatewayUseCase {
+    void handle( ServerWebSocket ws, GatewayMessage rawMessage);
 }

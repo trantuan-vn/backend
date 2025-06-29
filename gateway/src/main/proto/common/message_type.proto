@@ -12,7 +12,6 @@ enum MessageType {
   RESUME = 2;
   BUSINESS = 3;
   ERROR = 4;
-  MIGRATE = 5;
-  HEARTBEAT = 6;
-  STATE_UPDATE = 7;
+  HEARTBEAT = 5;
+  ACK = 6;
 }

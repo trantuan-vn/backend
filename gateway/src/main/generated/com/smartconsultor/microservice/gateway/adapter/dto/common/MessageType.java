@@ -29,17 +29,13 @@ public enum MessageType
    */
   ERROR(4),
   /**
-   * <code>MIGRATE = 5;</code>
+   * <code>HEARTBEAT = 5;</code>
    */
-  MIGRATE(5),
+  HEARTBEAT(5),
   /**
-   * <code>HEARTBEAT = 6;</code>
+   * <code>ACK = 6;</code>
    */
-  HEARTBEAT(6),
-  /**
-   * <code>STATE_UPDATE = 7;</code>
-   */
-  STATE_UPDATE(7),
+  ACK(6),
   UNRECOGNIZED(-1),
   ;
 
@@ -64,17 +60,13 @@ public enum MessageType
    */
   public static final int ERROR_VALUE = 4;
   /**
-   * <code>MIGRATE = 5;</code>
+   * <code>HEARTBEAT = 5;</code>
    */
-  public static final int MIGRATE_VALUE = 5;
+  public static final int HEARTBEAT_VALUE = 5;
   /**
-   * <code>HEARTBEAT = 6;</code>
+   * <code>ACK = 6;</code>
    */
-  public static final int HEARTBEAT_VALUE = 6;
-  /**
-   * <code>STATE_UPDATE = 7;</code>
-   */
-  public static final int STATE_UPDATE_VALUE = 7;
+  public static final int ACK_VALUE = 6;
 
 
   public final int getNumber() {
@@ -106,9 +98,8 @@ public enum MessageType
       case 2: return RESUME;
       case 3: return BUSINESS;
       case 4: return ERROR;
-      case 5: return MIGRATE;
-      case 6: return HEARTBEAT;
-      case 7: return STATE_UPDATE;
+      case 5: return HEARTBEAT;
+      case 6: return ACK;
       default: return null;
     }
   }

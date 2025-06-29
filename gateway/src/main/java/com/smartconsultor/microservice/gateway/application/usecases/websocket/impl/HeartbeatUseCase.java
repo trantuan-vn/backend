@@ -9,7 +9,7 @@ import com.smartconsultor.microservice.gateway.common.utils.AuthUtils;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.ServerWebSocket;
 
-public class HeartbeatUseCase implements GatewayUseCase<HeartbeatMessage> {
+public class HeartbeatUseCase implements GatewayUseCase {
 
     // private final ConnectionService connectionService;
 
@@ -18,7 +18,8 @@ public class HeartbeatUseCase implements GatewayUseCase<HeartbeatMessage> {
     }
 
     @Override
-    public void handle(HeartbeatMessage message, ServerWebSocket ws, GatewayMessage gatewayMessage) {
+    public void handle(ServerWebSocket ws, GatewayMessage gatewayMessage) {
+        HeartbeatMessage message=gatewayMessage.getHeartbeat();
         if (message == null || message.getStatus().isEmpty() || message.getTimestamp().isEmpty()) {
             AuthUtils.sendErrorAndClose(ws, ErrorCodes.UNSUPPORTED_MESSAGE, "Invalid heartbeat message: missing status or timestamp");
             return;

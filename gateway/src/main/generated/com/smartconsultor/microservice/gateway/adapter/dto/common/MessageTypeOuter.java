@@ -25,12 +25,12 @@ public final class MessageTypeOuter {
     java.lang.String[] descriptorData = {
       "\n\031common/message_type.proto\022:com.smartco" +
       "nsultor.microservice.gateway.adapter.dto" +
-      ".common*|\n\013MessageType\022\013\n\007UNKNOWN\020\000\022\r\n\tH" +
+      ".common*f\n\013MessageType\022\013\n\007UNKNOWN\020\000\022\r\n\tH" +
       "ANDSHAKE\020\001\022\n\n\006RESUME\020\002\022\014\n\010BUSINESS\020\003\022\t\n\005" +
-      "ERROR\020\004\022\013\n\007MIGRATE\020\005\022\r\n\tHEARTBEAT\020\006\022\020\n\014S" +
-      "TATE_UPDATE\020\007BP\n:com.smartconsultor.micr" +
-      "oservice.gateway.adapter.dto.commonB\020Mes" +
-      "sageTypeOuterP\001b\006proto3"
+      "ERROR\020\004\022\r\n\tHEARTBEAT\020\005\022\007\n\003ACK\020\006BP\n:com.s" +
+      "martconsultor.microservice.gateway.adapt" +
+      "er.dto.commonB\020MessageTypeOuterP\001b\006proto" +
+      "3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

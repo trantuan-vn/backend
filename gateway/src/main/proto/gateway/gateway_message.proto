@@ -12,6 +12,7 @@ import "gateway/resume.proto";
 import "gateway/business.proto";
 import "gateway/error.proto";
 import "gateway/heartbeat.proto";
+import "gateway/ack.proto";
 
 message GatewayMessage {
   com.smartconsultor.microservice.gateway.adapter.dto.common.MessageType type = 1;
@@ -20,14 +21,17 @@ message GatewayMessage {
   string app_id = 4;
   int32 connection_index = 5;
   uint64 timestamp = 6;
-  uint64 ack_seq_id = 7; // client
-  string socket_id = 8; // textHandlerID
+  string domain = 7;
+  string pod = 8;
+  string topic = 9;
+  string socket_id = 10; // textHandlerID
 
   oneof payload {
-    HandshakeMessage handshake = 9;
-    ResumeMessage resume = 10;
-    BusinessMessage business = 11;
-    ErrorMessage error = 12;
-    HeartbeatMessage heartbeat = 13;
+    HandshakeMessage handshake = 11;
+    ResumeMessage resume = 12;
+    BusinessMessageList business = 13;
+    ErrorMessage error = 14;
+    HeartbeatMessage heartbeat = 15;
+    AckMessageList ack=16;
   }
 }

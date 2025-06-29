@@ -67,21 +67,47 @@ public interface GatewayMessageOrBuilder extends
   long getTimestamp();
 
   /**
-   * <pre>
-   * client
-   * </pre>
-   *
-   * <code>uint64 ack_seq_id = 7;</code>
-   * @return The ackSeqId.
+   * <code>string domain = 7;</code>
+   * @return The domain.
    */
-  long getAckSeqId();
+  java.lang.String getDomain();
+  /**
+   * <code>string domain = 7;</code>
+   * @return The bytes for domain.
+   */
+  com.google.protobuf.ByteString
+      getDomainBytes();
+
+  /**
+   * <code>string pod = 8;</code>
+   * @return The pod.
+   */
+  java.lang.String getPod();
+  /**
+   * <code>string pod = 8;</code>
+   * @return The bytes for pod.
+   */
+  com.google.protobuf.ByteString
+      getPodBytes();
+
+  /**
+   * <code>string topic = 9;</code>
+   * @return The topic.
+   */
+  java.lang.String getTopic();
+  /**
+   * <code>string topic = 9;</code>
+   * @return The bytes for topic.
+   */
+  com.google.protobuf.ByteString
+      getTopicBytes();
 
   /**
    * <pre>
    * textHandlerID
    * </pre>
    *
-   * <code>string socket_id = 8;</code>
+   * <code>string socket_id = 10;</code>
    * @return The socketId.
    */
   java.lang.String getSocketId();
@@ -90,86 +116,101 @@ public interface GatewayMessageOrBuilder extends
    * textHandlerID
    * </pre>
    *
-   * <code>string socket_id = 8;</code>
+   * <code>string socket_id = 10;</code>
    * @return The bytes for socketId.
    */
   com.google.protobuf.ByteString
       getSocketIdBytes();
 
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
    * @return Whether the handshake field is set.
    */
   boolean hasHandshake();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
    * @return The handshake.
    */
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage getHandshake();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
    */
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessageOrBuilder getHandshakeOrBuilder();
 
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
    * @return Whether the resume field is set.
    */
   boolean hasResume();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
    * @return The resume.
    */
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage getResume();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
    */
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessageOrBuilder getResumeOrBuilder();
 
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
    * @return Whether the business field is set.
    */
   boolean hasBusiness();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
    * @return The business.
    */
-  com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage getBusiness();
+  com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList getBusiness();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
    */
-  com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageOrBuilder getBusinessOrBuilder();
+  com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageListOrBuilder getBusinessOrBuilder();
 
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
    * @return Whether the error field is set.
    */
   boolean hasError();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
    * @return The error.
    */
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage getError();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
    */
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessageOrBuilder getErrorOrBuilder();
 
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
    * @return Whether the heartbeat field is set.
    */
   boolean hasHeartbeat();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
    * @return The heartbeat.
    */
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage getHeartbeat();
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
    */
   com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessageOrBuilder getHeartbeatOrBuilder();
+
+  /**
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+   * @return Whether the ack field is set.
+   */
+  boolean hasAck();
+  /**
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+   * @return The ack.
+   */
+  com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList getAck();
+  /**
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+   */
+  com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageListOrBuilder getAckOrBuilder();
 
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.GatewayMessage.PayloadCase getPayloadCase();
 }

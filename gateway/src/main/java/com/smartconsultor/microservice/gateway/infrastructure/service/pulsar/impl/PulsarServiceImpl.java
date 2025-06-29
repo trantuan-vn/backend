@@ -3,6 +3,7 @@ package com.smartconsultor.microservice.gateway.infrastructure.service.pulsar.im
 
 import com.smartconsultor.microservice.gateway.adapter.dto.MessageRequest;
 import com.smartconsultor.microservice.gateway.adapter.dto.MessageResponse;
+import com.smartconsultor.microservice.gateway.adapter.dto.gateway.GatewayMessage;
 import com.smartconsultor.microservice.gateway.infrastructure.datasources.local.SlotManager;
 import com.smartconsultor.microservice.gateway.infrastructure.service.pulsar.BacklogManager;
 import com.smartconsultor.microservice.gateway.infrastructure.service.pulsar.Constants;
@@ -113,7 +114,9 @@ public class PulsarServiceImpl implements PulsarService {
     }
 
     @Override
-    public Future<MessageResponse> sendToTopic(String userId, String socketId, MessageRequest message) {
+    public Future<GatewayMessage> sendToTopic(GatewayMessage message) {
+        String socketId=message.getSocketId();
+        String userId=message.getUserId();
         if (!TopicUtils.isValidSocketId(socketId)) {
             return Future.failedFuture("Invalid socket ID");
         }
@@ -126,7 +129,7 @@ public class PulsarServiceImpl implements PulsarService {
             return Future.failedFuture("No topic assigned for socket ID");
         }
 
-        return producerManager.sendToTopic(topic, socketId, message);
+        return producerManager.sendToTopic(topic, message);
     }
 
     @Override

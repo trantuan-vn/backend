@@ -13,3 +13,4 @@ message ResumeMessage {
   uint64 lastAckSeqId = 4;
   string timestamp = 5; //client 
 }
+

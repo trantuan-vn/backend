@@ -20,6 +20,9 @@ private static final long serialVersionUID = 0L;
     userId_ = "";
     deviceId_ = "";
     appId_ = "";
+    domain_ = "";
+    pod_ = "";
+    topic_ = "";
     socketId_ = "";
   }
 
@@ -53,11 +56,12 @@ private static final long serialVersionUID = 0L;
   public enum PayloadCase
       implements com.google.protobuf.Internal.EnumLite,
           com.google.protobuf.AbstractMessage.InternalOneOfEnum {
-    HANDSHAKE(9),
-    RESUME(10),
-    BUSINESS(11),
-    ERROR(12),
-    HEARTBEAT(13),
+    HANDSHAKE(11),
+    RESUME(12),
+    BUSINESS(13),
+    ERROR(14),
+    HEARTBEAT(15),
+    ACK(16),
     PAYLOAD_NOT_SET(0);
     private final int value;
     private PayloadCase(int value) {
@@ -75,11 +79,12 @@ private static final long serialVersionUID = 0L;
 
     public static PayloadCase forNumber(int value) {
       switch (value) {
-        case 9: return HANDSHAKE;
-        case 10: return RESUME;
-        case 11: return BUSINESS;
-        case 12: return ERROR;
-        case 13: return HEARTBEAT;
+        case 11: return HANDSHAKE;
+        case 12: return RESUME;
+        case 13: return BUSINESS;
+        case 14: return ERROR;
+        case 15: return HEARTBEAT;
+        case 16: return ACK;
         case 0: return PAYLOAD_NOT_SET;
         default: return null;
       }
@@ -250,29 +255,128 @@ private static final long serialVersionUID = 0L;
     return timestamp_;
   }
 
-  public static final int ACK_SEQ_ID_FIELD_NUMBER = 7;
-  private long ackSeqId_;
+  public static final int DOMAIN_FIELD_NUMBER = 7;
+  private volatile java.lang.Object domain_;
   /**
-   * <pre>
-   * client
-   * </pre>
-   *
-   * <code>uint64 ack_seq_id = 7;</code>
-   * @return The ackSeqId.
+   * <code>string domain = 7;</code>
+   * @return The domain.
    */
   @java.lang.Override
-  public long getAckSeqId() {
-    return ackSeqId_;
+  public java.lang.String getDomain() {
+    java.lang.Object ref = domain_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      domain_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string domain = 7;</code>
+   * @return The bytes for domain.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getDomainBytes() {
+    java.lang.Object ref = domain_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      domain_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
-  public static final int SOCKET_ID_FIELD_NUMBER = 8;
+  public static final int POD_FIELD_NUMBER = 8;
+  private volatile java.lang.Object pod_;
+  /**
+   * <code>string pod = 8;</code>
+   * @return The pod.
+   */
+  @java.lang.Override
+  public java.lang.String getPod() {
+    java.lang.Object ref = pod_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      pod_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string pod = 8;</code>
+   * @return The bytes for pod.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getPodBytes() {
+    java.lang.Object ref = pod_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      pod_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int TOPIC_FIELD_NUMBER = 9;
+  private volatile java.lang.Object topic_;
+  /**
+   * <code>string topic = 9;</code>
+   * @return The topic.
+   */
+  @java.lang.Override
+  public java.lang.String getTopic() {
+    java.lang.Object ref = topic_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      topic_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string topic = 9;</code>
+   * @return The bytes for topic.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getTopicBytes() {
+    java.lang.Object ref = topic_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      topic_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SOCKET_ID_FIELD_NUMBER = 10;
   private volatile java.lang.Object socketId_;
   /**
    * <pre>
    * textHandlerID
    * </pre>
    *
-   * <code>string socket_id = 8;</code>
+   * <code>string socket_id = 10;</code>
    * @return The socketId.
    */
   @java.lang.Override
@@ -293,7 +397,7 @@ private static final long serialVersionUID = 0L;
    * textHandlerID
    * </pre>
    *
-   * <code>string socket_id = 8;</code>
+   * <code>string socket_id = 10;</code>
    * @return The bytes for socketId.
    */
   @java.lang.Override
@@ -311,159 +415,190 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int HANDSHAKE_FIELD_NUMBER = 9;
+  public static final int HANDSHAKE_FIELD_NUMBER = 11;
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
    * @return Whether the handshake field is set.
    */
   @java.lang.Override
   public boolean hasHandshake() {
-    return payloadCase_ == 9;
+    return payloadCase_ == 11;
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
    * @return The handshake.
    */
   @java.lang.Override
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage getHandshake() {
-    if (payloadCase_ == 9) {
+    if (payloadCase_ == 11) {
        return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_;
     }
     return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.getDefaultInstance();
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
    */
   @java.lang.Override
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessageOrBuilder getHandshakeOrBuilder() {
-    if (payloadCase_ == 9) {
+    if (payloadCase_ == 11) {
        return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_;
     }
     return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.getDefaultInstance();
   }
 
-  public static final int RESUME_FIELD_NUMBER = 10;
+  public static final int RESUME_FIELD_NUMBER = 12;
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
    * @return Whether the resume field is set.
    */
   @java.lang.Override
   public boolean hasResume() {
-    return payloadCase_ == 10;
+    return payloadCase_ == 12;
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
    * @return The resume.
    */
   @java.lang.Override
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage getResume() {
-    if (payloadCase_ == 10) {
+    if (payloadCase_ == 12) {
        return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_;
     }
     return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.getDefaultInstance();
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
    */
   @java.lang.Override
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessageOrBuilder getResumeOrBuilder() {
-    if (payloadCase_ == 10) {
+    if (payloadCase_ == 12) {
        return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_;
     }
     return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.getDefaultInstance();
   }
 
-  public static final int BUSINESS_FIELD_NUMBER = 11;
+  public static final int BUSINESS_FIELD_NUMBER = 13;
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
    * @return Whether the business field is set.
    */
   @java.lang.Override
   public boolean hasBusiness() {
-    return payloadCase_ == 11;
+    return payloadCase_ == 13;
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
    * @return The business.
    */
   @java.lang.Override
-  public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage getBusiness() {
-    if (payloadCase_ == 11) {
-       return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage) payload_;
+  public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList getBusiness() {
+    if (payloadCase_ == 13) {
+       return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList) payload_;
     }
-    return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
+    return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
    */
   @java.lang.Override
-  public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageOrBuilder getBusinessOrBuilder() {
-    if (payloadCase_ == 11) {
-       return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage) payload_;
+  public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageListOrBuilder getBusinessOrBuilder() {
+    if (payloadCase_ == 13) {
+       return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList) payload_;
     }
-    return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
+    return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
   }
 
-  public static final int ERROR_FIELD_NUMBER = 12;
+  public static final int ERROR_FIELD_NUMBER = 14;
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
    * @return Whether the error field is set.
    */
   @java.lang.Override
   public boolean hasError() {
-    return payloadCase_ == 12;
+    return payloadCase_ == 14;
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
    * @return The error.
    */
   @java.lang.Override
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage getError() {
-    if (payloadCase_ == 12) {
+    if (payloadCase_ == 14) {
        return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_;
     }
     return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.getDefaultInstance();
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
    */
   @java.lang.Override
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessageOrBuilder getErrorOrBuilder() {
-    if (payloadCase_ == 12) {
+    if (payloadCase_ == 14) {
        return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_;
     }
     return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.getDefaultInstance();
   }
 
-  public static final int HEARTBEAT_FIELD_NUMBER = 13;
+  public static final int HEARTBEAT_FIELD_NUMBER = 15;
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
    * @return Whether the heartbeat field is set.
    */
   @java.lang.Override
   public boolean hasHeartbeat() {
-    return payloadCase_ == 13;
+    return payloadCase_ == 15;
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
    * @return The heartbeat.
    */
   @java.lang.Override
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage getHeartbeat() {
-    if (payloadCase_ == 13) {
+    if (payloadCase_ == 15) {
        return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_;
     }
     return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.getDefaultInstance();
   }
   /**
-   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
    */
   @java.lang.Override
   public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessageOrBuilder getHeartbeatOrBuilder() {
-    if (payloadCase_ == 13) {
+    if (payloadCase_ == 15) {
        return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_;
     }
     return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.getDefaultInstance();
+  }
+
+  public static final int ACK_FIELD_NUMBER = 16;
+  /**
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+   * @return Whether the ack field is set.
+   */
+  @java.lang.Override
+  public boolean hasAck() {
+    return payloadCase_ == 16;
+  }
+  /**
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+   * @return The ack.
+   */
+  @java.lang.Override
+  public com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList getAck() {
+    if (payloadCase_ == 16) {
+       return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList) payload_;
+    }
+    return com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.getDefaultInstance();
+  }
+  /**
+   * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+   */
+  @java.lang.Override
+  public com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageListOrBuilder getAckOrBuilder() {
+    if (payloadCase_ == 16) {
+       return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList) payload_;
+    }
+    return com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.getDefaultInstance();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -498,26 +633,35 @@ private static final long serialVersionUID = 0L;
     if (timestamp_ != 0L) {
       output.writeUInt64(6, timestamp_);
     }
-    if (ackSeqId_ != 0L) {
-      output.writeUInt64(7, ackSeqId_);
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(domain_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, domain_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(pod_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, pod_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(topic_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 9, topic_);
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(socketId_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, socketId_);
-    }
-    if (payloadCase_ == 9) {
-      output.writeMessage(9, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_);
-    }
-    if (payloadCase_ == 10) {
-      output.writeMessage(10, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 10, socketId_);
     }
     if (payloadCase_ == 11) {
-      output.writeMessage(11, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage) payload_);
+      output.writeMessage(11, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_);
     }
     if (payloadCase_ == 12) {
-      output.writeMessage(12, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_);
+      output.writeMessage(12, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_);
     }
     if (payloadCase_ == 13) {
-      output.writeMessage(13, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_);
+      output.writeMessage(13, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList) payload_);
+    }
+    if (payloadCase_ == 14) {
+      output.writeMessage(14, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_);
+    }
+    if (payloadCase_ == 15) {
+      output.writeMessage(15, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_);
+    }
+    if (payloadCase_ == 16) {
+      output.writeMessage(16, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList) payload_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -549,32 +693,41 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeUInt64Size(6, timestamp_);
     }
-    if (ackSeqId_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeUInt64Size(7, ackSeqId_);
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(domain_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, domain_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(pod_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, pod_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(topic_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, topic_);
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(socketId_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, socketId_);
-    }
-    if (payloadCase_ == 9) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(9, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_);
-    }
-    if (payloadCase_ == 10) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(10, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, socketId_);
     }
     if (payloadCase_ == 11) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(11, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage) payload_);
+        .computeMessageSize(11, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_);
     }
     if (payloadCase_ == 12) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(12, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_);
+        .computeMessageSize(12, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_);
     }
     if (payloadCase_ == 13) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(13, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_);
+        .computeMessageSize(13, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList) payload_);
+    }
+    if (payloadCase_ == 14) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(14, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_);
+    }
+    if (payloadCase_ == 15) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(15, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_);
+    }
+    if (payloadCase_ == 16) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(16, (com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList) payload_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -602,31 +755,39 @@ private static final long serialVersionUID = 0L;
         != other.getConnectionIndex()) return false;
     if (getTimestamp()
         != other.getTimestamp()) return false;
-    if (getAckSeqId()
-        != other.getAckSeqId()) return false;
+    if (!getDomain()
+        .equals(other.getDomain())) return false;
+    if (!getPod()
+        .equals(other.getPod())) return false;
+    if (!getTopic()
+        .equals(other.getTopic())) return false;
     if (!getSocketId()
         .equals(other.getSocketId())) return false;
     if (!getPayloadCase().equals(other.getPayloadCase())) return false;
     switch (payloadCase_) {
-      case 9:
+      case 11:
         if (!getHandshake()
             .equals(other.getHandshake())) return false;
         break;
-      case 10:
+      case 12:
         if (!getResume()
             .equals(other.getResume())) return false;
         break;
-      case 11:
+      case 13:
         if (!getBusiness()
             .equals(other.getBusiness())) return false;
         break;
-      case 12:
+      case 14:
         if (!getError()
             .equals(other.getError())) return false;
         break;
-      case 13:
+      case 15:
         if (!getHeartbeat()
             .equals(other.getHeartbeat())) return false;
+        break;
+      case 16:
+        if (!getAck()
+            .equals(other.getAck())) return false;
         break;
       case 0:
       default:
@@ -655,31 +816,38 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         getTimestamp());
-    hash = (37 * hash) + ACK_SEQ_ID_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getAckSeqId());
+    hash = (37 * hash) + DOMAIN_FIELD_NUMBER;
+    hash = (53 * hash) + getDomain().hashCode();
+    hash = (37 * hash) + POD_FIELD_NUMBER;
+    hash = (53 * hash) + getPod().hashCode();
+    hash = (37 * hash) + TOPIC_FIELD_NUMBER;
+    hash = (53 * hash) + getTopic().hashCode();
     hash = (37 * hash) + SOCKET_ID_FIELD_NUMBER;
     hash = (53 * hash) + getSocketId().hashCode();
     switch (payloadCase_) {
-      case 9:
+      case 11:
         hash = (37 * hash) + HANDSHAKE_FIELD_NUMBER;
         hash = (53 * hash) + getHandshake().hashCode();
         break;
-      case 10:
+      case 12:
         hash = (37 * hash) + RESUME_FIELD_NUMBER;
         hash = (53 * hash) + getResume().hashCode();
         break;
-      case 11:
+      case 13:
         hash = (37 * hash) + BUSINESS_FIELD_NUMBER;
         hash = (53 * hash) + getBusiness().hashCode();
         break;
-      case 12:
+      case 14:
         hash = (37 * hash) + ERROR_FIELD_NUMBER;
         hash = (53 * hash) + getError().hashCode();
         break;
-      case 13:
+      case 15:
         hash = (37 * hash) + HEARTBEAT_FIELD_NUMBER;
         hash = (53 * hash) + getHeartbeat().hashCode();
+        break;
+      case 16:
+        hash = (37 * hash) + ACK_FIELD_NUMBER;
+        hash = (53 * hash) + getAck().hashCode();
         break;
       case 0:
       default:
@@ -824,7 +992,11 @@ private static final long serialVersionUID = 0L;
 
       timestamp_ = 0L;
 
-      ackSeqId_ = 0L;
+      domain_ = "";
+
+      pod_ = "";
+
+      topic_ = "";
 
       socketId_ = "";
 
@@ -842,6 +1014,9 @@ private static final long serialVersionUID = 0L;
       }
       if (heartbeatBuilder_ != null) {
         heartbeatBuilder_.clear();
+      }
+      if (ackBuilder_ != null) {
+        ackBuilder_.clear();
       }
       payloadCase_ = 0;
       payload_ = null;
@@ -877,41 +1052,50 @@ private static final long serialVersionUID = 0L;
       result.appId_ = appId_;
       result.connectionIndex_ = connectionIndex_;
       result.timestamp_ = timestamp_;
-      result.ackSeqId_ = ackSeqId_;
+      result.domain_ = domain_;
+      result.pod_ = pod_;
+      result.topic_ = topic_;
       result.socketId_ = socketId_;
-      if (payloadCase_ == 9) {
+      if (payloadCase_ == 11) {
         if (handshakeBuilder_ == null) {
           result.payload_ = payload_;
         } else {
           result.payload_ = handshakeBuilder_.build();
         }
       }
-      if (payloadCase_ == 10) {
+      if (payloadCase_ == 12) {
         if (resumeBuilder_ == null) {
           result.payload_ = payload_;
         } else {
           result.payload_ = resumeBuilder_.build();
         }
       }
-      if (payloadCase_ == 11) {
+      if (payloadCase_ == 13) {
         if (businessBuilder_ == null) {
           result.payload_ = payload_;
         } else {
           result.payload_ = businessBuilder_.build();
         }
       }
-      if (payloadCase_ == 12) {
+      if (payloadCase_ == 14) {
         if (errorBuilder_ == null) {
           result.payload_ = payload_;
         } else {
           result.payload_ = errorBuilder_.build();
         }
       }
-      if (payloadCase_ == 13) {
+      if (payloadCase_ == 15) {
         if (heartbeatBuilder_ == null) {
           result.payload_ = payload_;
         } else {
           result.payload_ = heartbeatBuilder_.build();
+        }
+      }
+      if (payloadCase_ == 16) {
+        if (ackBuilder_ == null) {
+          result.payload_ = payload_;
+        } else {
+          result.payload_ = ackBuilder_.build();
         }
       }
       result.payloadCase_ = payloadCase_;
@@ -984,8 +1168,17 @@ private static final long serialVersionUID = 0L;
       if (other.getTimestamp() != 0L) {
         setTimestamp(other.getTimestamp());
       }
-      if (other.getAckSeqId() != 0L) {
-        setAckSeqId(other.getAckSeqId());
+      if (!other.getDomain().isEmpty()) {
+        domain_ = other.domain_;
+        onChanged();
+      }
+      if (!other.getPod().isEmpty()) {
+        pod_ = other.pod_;
+        onChanged();
+      }
+      if (!other.getTopic().isEmpty()) {
+        topic_ = other.topic_;
+        onChanged();
       }
       if (!other.getSocketId().isEmpty()) {
         socketId_ = other.socketId_;
@@ -1010,6 +1203,10 @@ private static final long serialVersionUID = 0L;
         }
         case HEARTBEAT: {
           mergeHeartbeat(other.getHeartbeat());
+          break;
+        }
+        case ACK: {
+          mergeAck(other.getAck());
           break;
         }
         case PAYLOAD_NOT_SET: {
@@ -1072,51 +1269,68 @@ private static final long serialVersionUID = 0L;
 
               break;
             } // case 48
-            case 56: {
-              ackSeqId_ = input.readUInt64();
+            case 58: {
+              domain_ = input.readStringRequireUtf8();
 
               break;
-            } // case 56
+            } // case 58
             case 66: {
-              socketId_ = input.readStringRequireUtf8();
+              pod_ = input.readStringRequireUtf8();
 
               break;
             } // case 66
             case 74: {
-              input.readMessage(
-                  getHandshakeFieldBuilder().getBuilder(),
-                  extensionRegistry);
-              payloadCase_ = 9;
+              topic_ = input.readStringRequireUtf8();
+
               break;
             } // case 74
             case 82: {
-              input.readMessage(
-                  getResumeFieldBuilder().getBuilder(),
-                  extensionRegistry);
-              payloadCase_ = 10;
+              socketId_ = input.readStringRequireUtf8();
+
               break;
             } // case 82
             case 90: {
               input.readMessage(
-                  getBusinessFieldBuilder().getBuilder(),
+                  getHandshakeFieldBuilder().getBuilder(),
                   extensionRegistry);
               payloadCase_ = 11;
               break;
             } // case 90
             case 98: {
               input.readMessage(
-                  getErrorFieldBuilder().getBuilder(),
+                  getResumeFieldBuilder().getBuilder(),
                   extensionRegistry);
               payloadCase_ = 12;
               break;
             } // case 98
             case 106: {
               input.readMessage(
-                  getHeartbeatFieldBuilder().getBuilder(),
+                  getBusinessFieldBuilder().getBuilder(),
                   extensionRegistry);
               payloadCase_ = 13;
               break;
             } // case 106
+            case 114: {
+              input.readMessage(
+                  getErrorFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              payloadCase_ = 14;
+              break;
+            } // case 114
+            case 122: {
+              input.readMessage(
+                  getHeartbeatFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              payloadCase_ = 15;
+              break;
+            } // case 122
+            case 130: {
+              input.readMessage(
+                  getAckFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              payloadCase_ = 16;
+              break;
+            } // case 130
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -1492,45 +1706,230 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private long ackSeqId_ ;
+    private java.lang.Object domain_ = "";
     /**
-     * <pre>
-     * client
-     * </pre>
-     *
-     * <code>uint64 ack_seq_id = 7;</code>
-     * @return The ackSeqId.
+     * <code>string domain = 7;</code>
+     * @return The domain.
      */
-    @java.lang.Override
-    public long getAckSeqId() {
-      return ackSeqId_;
+    public java.lang.String getDomain() {
+      java.lang.Object ref = domain_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        domain_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <pre>
-     * client
-     * </pre>
-     *
-     * <code>uint64 ack_seq_id = 7;</code>
-     * @param value The ackSeqId to set.
+     * <code>string domain = 7;</code>
+     * @return The bytes for domain.
+     */
+    public com.google.protobuf.ByteString
+        getDomainBytes() {
+      java.lang.Object ref = domain_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        domain_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string domain = 7;</code>
+     * @param value The domain to set.
      * @return This builder for chaining.
      */
-    public Builder setAckSeqId(long value) {
-      
-      ackSeqId_ = value;
+    public Builder setDomain(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      domain_ = value;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * client
-     * </pre>
-     *
-     * <code>uint64 ack_seq_id = 7;</code>
+     * <code>string domain = 7;</code>
      * @return This builder for chaining.
      */
-    public Builder clearAckSeqId() {
+    public Builder clearDomain() {
       
-      ackSeqId_ = 0L;
+      domain_ = getDefaultInstance().getDomain();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string domain = 7;</code>
+     * @param value The bytes for domain to set.
+     * @return This builder for chaining.
+     */
+    public Builder setDomainBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      domain_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object pod_ = "";
+    /**
+     * <code>string pod = 8;</code>
+     * @return The pod.
+     */
+    public java.lang.String getPod() {
+      java.lang.Object ref = pod_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        pod_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string pod = 8;</code>
+     * @return The bytes for pod.
+     */
+    public com.google.protobuf.ByteString
+        getPodBytes() {
+      java.lang.Object ref = pod_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        pod_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string pod = 8;</code>
+     * @param value The pod to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPod(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      pod_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string pod = 8;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearPod() {
+      
+      pod_ = getDefaultInstance().getPod();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string pod = 8;</code>
+     * @param value The bytes for pod to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPodBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      pod_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object topic_ = "";
+    /**
+     * <code>string topic = 9;</code>
+     * @return The topic.
+     */
+    public java.lang.String getTopic() {
+      java.lang.Object ref = topic_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        topic_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string topic = 9;</code>
+     * @return The bytes for topic.
+     */
+    public com.google.protobuf.ByteString
+        getTopicBytes() {
+      java.lang.Object ref = topic_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        topic_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string topic = 9;</code>
+     * @param value The topic to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTopic(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      topic_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string topic = 9;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearTopic() {
+      
+      topic_ = getDefaultInstance().getTopic();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string topic = 9;</code>
+     * @param value The bytes for topic to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTopicBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      topic_ = value;
       onChanged();
       return this;
     }
@@ -1541,7 +1940,7 @@ private static final long serialVersionUID = 0L;
      * textHandlerID
      * </pre>
      *
-     * <code>string socket_id = 8;</code>
+     * <code>string socket_id = 10;</code>
      * @return The socketId.
      */
     public java.lang.String getSocketId() {
@@ -1561,7 +1960,7 @@ private static final long serialVersionUID = 0L;
      * textHandlerID
      * </pre>
      *
-     * <code>string socket_id = 8;</code>
+     * <code>string socket_id = 10;</code>
      * @return The bytes for socketId.
      */
     public com.google.protobuf.ByteString
@@ -1582,7 +1981,7 @@ private static final long serialVersionUID = 0L;
      * textHandlerID
      * </pre>
      *
-     * <code>string socket_id = 8;</code>
+     * <code>string socket_id = 10;</code>
      * @param value The socketId to set.
      * @return This builder for chaining.
      */
@@ -1601,7 +2000,7 @@ private static final long serialVersionUID = 0L;
      * textHandlerID
      * </pre>
      *
-     * <code>string socket_id = 8;</code>
+     * <code>string socket_id = 10;</code>
      * @return This builder for chaining.
      */
     public Builder clearSocketId() {
@@ -1615,7 +2014,7 @@ private static final long serialVersionUID = 0L;
      * textHandlerID
      * </pre>
      *
-     * <code>string socket_id = 8;</code>
+     * <code>string socket_id = 10;</code>
      * @param value The bytes for socketId to set.
      * @return This builder for chaining.
      */
@@ -1634,33 +2033,33 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessageOrBuilder> handshakeBuilder_;
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      * @return Whether the handshake field is set.
      */
     @java.lang.Override
     public boolean hasHandshake() {
-      return payloadCase_ == 9;
+      return payloadCase_ == 11;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      * @return The handshake.
      */
     @java.lang.Override
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage getHandshake() {
       if (handshakeBuilder_ == null) {
-        if (payloadCase_ == 9) {
+        if (payloadCase_ == 11) {
           return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_;
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.getDefaultInstance();
       } else {
-        if (payloadCase_ == 9) {
+        if (payloadCase_ == 11) {
           return handshakeBuilder_.getMessage();
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      */
     public Builder setHandshake(com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage value) {
       if (handshakeBuilder_ == null) {
@@ -1672,11 +2071,11 @@ private static final long serialVersionUID = 0L;
       } else {
         handshakeBuilder_.setMessage(value);
       }
-      payloadCase_ = 9;
+      payloadCase_ = 11;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      */
     public Builder setHandshake(
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.Builder builderForValue) {
@@ -1686,15 +2085,15 @@ private static final long serialVersionUID = 0L;
       } else {
         handshakeBuilder_.setMessage(builderForValue.build());
       }
-      payloadCase_ = 9;
+      payloadCase_ = 11;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      */
     public Builder mergeHandshake(com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage value) {
       if (handshakeBuilder_ == null) {
-        if (payloadCase_ == 9 &&
+        if (payloadCase_ == 11 &&
             payload_ != com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.getDefaultInstance()) {
           payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.newBuilder((com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_)
               .mergeFrom(value).buildPartial();
@@ -1703,26 +2102,26 @@ private static final long serialVersionUID = 0L;
         }
         onChanged();
       } else {
-        if (payloadCase_ == 9) {
+        if (payloadCase_ == 11) {
           handshakeBuilder_.mergeFrom(value);
         }
         handshakeBuilder_.setMessage(value);
       }
-      payloadCase_ = 9;
+      payloadCase_ = 11;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      */
     public Builder clearHandshake() {
       if (handshakeBuilder_ == null) {
-        if (payloadCase_ == 9) {
+        if (payloadCase_ == 11) {
           payloadCase_ = 0;
           payload_ = null;
           onChanged();
         }
       } else {
-        if (payloadCase_ == 9) {
+        if (payloadCase_ == 11) {
           payloadCase_ = 0;
           payload_ = null;
         }
@@ -1731,33 +2130,33 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      */
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.Builder getHandshakeBuilder() {
       return getHandshakeFieldBuilder().getBuilder();
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      */
     @java.lang.Override
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessageOrBuilder getHandshakeOrBuilder() {
-      if ((payloadCase_ == 9) && (handshakeBuilder_ != null)) {
+      if ((payloadCase_ == 11) && (handshakeBuilder_ != null)) {
         return handshakeBuilder_.getMessageOrBuilder();
       } else {
-        if (payloadCase_ == 9) {
+        if (payloadCase_ == 11) {
           return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage) payload_;
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 9;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage handshake = 11;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessageOrBuilder> 
         getHandshakeFieldBuilder() {
       if (handshakeBuilder_ == null) {
-        if (!(payloadCase_ == 9)) {
+        if (!(payloadCase_ == 11)) {
           payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.HandshakeMessage.getDefaultInstance();
         }
         handshakeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -1767,7 +2166,7 @@ private static final long serialVersionUID = 0L;
                 isClean());
         payload_ = null;
       }
-      payloadCase_ = 9;
+      payloadCase_ = 11;
       onChanged();;
       return handshakeBuilder_;
     }
@@ -1775,33 +2174,33 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessageOrBuilder> resumeBuilder_;
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      * @return Whether the resume field is set.
      */
     @java.lang.Override
     public boolean hasResume() {
-      return payloadCase_ == 10;
+      return payloadCase_ == 12;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      * @return The resume.
      */
     @java.lang.Override
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage getResume() {
       if (resumeBuilder_ == null) {
-        if (payloadCase_ == 10) {
+        if (payloadCase_ == 12) {
           return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_;
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.getDefaultInstance();
       } else {
-        if (payloadCase_ == 10) {
+        if (payloadCase_ == 12) {
           return resumeBuilder_.getMessage();
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      */
     public Builder setResume(com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage value) {
       if (resumeBuilder_ == null) {
@@ -1813,11 +2212,11 @@ private static final long serialVersionUID = 0L;
       } else {
         resumeBuilder_.setMessage(value);
       }
-      payloadCase_ = 10;
+      payloadCase_ = 12;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      */
     public Builder setResume(
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.Builder builderForValue) {
@@ -1827,15 +2226,15 @@ private static final long serialVersionUID = 0L;
       } else {
         resumeBuilder_.setMessage(builderForValue.build());
       }
-      payloadCase_ = 10;
+      payloadCase_ = 12;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      */
     public Builder mergeResume(com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage value) {
       if (resumeBuilder_ == null) {
-        if (payloadCase_ == 10 &&
+        if (payloadCase_ == 12 &&
             payload_ != com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.getDefaultInstance()) {
           payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.newBuilder((com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_)
               .mergeFrom(value).buildPartial();
@@ -1844,26 +2243,26 @@ private static final long serialVersionUID = 0L;
         }
         onChanged();
       } else {
-        if (payloadCase_ == 10) {
+        if (payloadCase_ == 12) {
           resumeBuilder_.mergeFrom(value);
         }
         resumeBuilder_.setMessage(value);
       }
-      payloadCase_ = 10;
+      payloadCase_ = 12;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      */
     public Builder clearResume() {
       if (resumeBuilder_ == null) {
-        if (payloadCase_ == 10) {
+        if (payloadCase_ == 12) {
           payloadCase_ = 0;
           payload_ = null;
           onChanged();
         }
       } else {
-        if (payloadCase_ == 10) {
+        if (payloadCase_ == 12) {
           payloadCase_ = 0;
           payload_ = null;
         }
@@ -1872,33 +2271,33 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      */
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.Builder getResumeBuilder() {
       return getResumeFieldBuilder().getBuilder();
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      */
     @java.lang.Override
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessageOrBuilder getResumeOrBuilder() {
-      if ((payloadCase_ == 10) && (resumeBuilder_ != null)) {
+      if ((payloadCase_ == 12) && (resumeBuilder_ != null)) {
         return resumeBuilder_.getMessageOrBuilder();
       } else {
-        if (payloadCase_ == 10) {
+        if (payloadCase_ == 12) {
           return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage) payload_;
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 10;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage resume = 12;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessageOrBuilder> 
         getResumeFieldBuilder() {
       if (resumeBuilder_ == null) {
-        if (!(payloadCase_ == 10)) {
+        if (!(payloadCase_ == 12)) {
           payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.ResumeMessage.getDefaultInstance();
         }
         resumeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -1908,43 +2307,43 @@ private static final long serialVersionUID = 0L;
                 isClean());
         payload_ = null;
       }
-      payloadCase_ = 10;
+      payloadCase_ = 12;
       onChanged();;
       return resumeBuilder_;
     }
 
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageOrBuilder> businessBuilder_;
+        com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageListOrBuilder> businessBuilder_;
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      * @return Whether the business field is set.
      */
     @java.lang.Override
     public boolean hasBusiness() {
-      return payloadCase_ == 11;
+      return payloadCase_ == 13;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      * @return The business.
      */
     @java.lang.Override
-    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage getBusiness() {
+    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList getBusiness() {
       if (businessBuilder_ == null) {
-        if (payloadCase_ == 11) {
-          return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage) payload_;
+        if (payloadCase_ == 13) {
+          return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList) payload_;
         }
-        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
+        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
       } else {
-        if (payloadCase_ == 11) {
+        if (payloadCase_ == 13) {
           return businessBuilder_.getMessage();
         }
-        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
+        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      */
-    public Builder setBusiness(com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage value) {
+    public Builder setBusiness(com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList value) {
       if (businessBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1954,57 +2353,57 @@ private static final long serialVersionUID = 0L;
       } else {
         businessBuilder_.setMessage(value);
       }
-      payloadCase_ = 11;
+      payloadCase_ = 13;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      */
     public Builder setBusiness(
-        com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.Builder builderForValue) {
+        com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.Builder builderForValue) {
       if (businessBuilder_ == null) {
         payload_ = builderForValue.build();
         onChanged();
       } else {
         businessBuilder_.setMessage(builderForValue.build());
       }
-      payloadCase_ = 11;
+      payloadCase_ = 13;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      */
-    public Builder mergeBusiness(com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage value) {
+    public Builder mergeBusiness(com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList value) {
       if (businessBuilder_ == null) {
-        if (payloadCase_ == 11 &&
-            payload_ != com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.getDefaultInstance()) {
-          payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.newBuilder((com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage) payload_)
+        if (payloadCase_ == 13 &&
+            payload_ != com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.getDefaultInstance()) {
+          payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.newBuilder((com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList) payload_)
               .mergeFrom(value).buildPartial();
         } else {
           payload_ = value;
         }
         onChanged();
       } else {
-        if (payloadCase_ == 11) {
+        if (payloadCase_ == 13) {
           businessBuilder_.mergeFrom(value);
         }
         businessBuilder_.setMessage(value);
       }
-      payloadCase_ = 11;
+      payloadCase_ = 13;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      */
     public Builder clearBusiness() {
       if (businessBuilder_ == null) {
-        if (payloadCase_ == 11) {
+        if (payloadCase_ == 13) {
           payloadCase_ = 0;
           payload_ = null;
           onChanged();
         }
       } else {
-        if (payloadCase_ == 11) {
+        if (payloadCase_ == 13) {
           payloadCase_ = 0;
           payload_ = null;
         }
@@ -2013,43 +2412,43 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      */
-    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.Builder getBusinessBuilder() {
+    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.Builder getBusinessBuilder() {
       return getBusinessFieldBuilder().getBuilder();
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      */
     @java.lang.Override
-    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageOrBuilder getBusinessOrBuilder() {
-      if ((payloadCase_ == 11) && (businessBuilder_ != null)) {
+    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageListOrBuilder getBusinessOrBuilder() {
+      if ((payloadCase_ == 13) && (businessBuilder_ != null)) {
         return businessBuilder_.getMessageOrBuilder();
       } else {
-        if (payloadCase_ == 11) {
-          return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage) payload_;
+        if (payloadCase_ == 13) {
+          return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList) payload_;
         }
-        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
+        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage business = 11;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList business = 13;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageOrBuilder> 
+        com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageListOrBuilder> 
         getBusinessFieldBuilder() {
       if (businessBuilder_ == null) {
-        if (!(payloadCase_ == 11)) {
-          payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.getDefaultInstance();
+        if (!(payloadCase_ == 13)) {
+          payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.getDefaultInstance();
         }
         businessBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageOrBuilder>(
-                (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessage) payload_,
+            com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageListOrBuilder>(
+                (com.smartconsultor.microservice.gateway.adapter.dto.gateway.BusinessMessageList) payload_,
                 getParentForChildren(),
                 isClean());
         payload_ = null;
       }
-      payloadCase_ = 11;
+      payloadCase_ = 13;
       onChanged();;
       return businessBuilder_;
     }
@@ -2057,33 +2456,33 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessageOrBuilder> errorBuilder_;
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      * @return Whether the error field is set.
      */
     @java.lang.Override
     public boolean hasError() {
-      return payloadCase_ == 12;
+      return payloadCase_ == 14;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      * @return The error.
      */
     @java.lang.Override
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage getError() {
       if (errorBuilder_ == null) {
-        if (payloadCase_ == 12) {
+        if (payloadCase_ == 14) {
           return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_;
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.getDefaultInstance();
       } else {
-        if (payloadCase_ == 12) {
+        if (payloadCase_ == 14) {
           return errorBuilder_.getMessage();
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      */
     public Builder setError(com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage value) {
       if (errorBuilder_ == null) {
@@ -2095,11 +2494,11 @@ private static final long serialVersionUID = 0L;
       } else {
         errorBuilder_.setMessage(value);
       }
-      payloadCase_ = 12;
+      payloadCase_ = 14;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      */
     public Builder setError(
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.Builder builderForValue) {
@@ -2109,15 +2508,15 @@ private static final long serialVersionUID = 0L;
       } else {
         errorBuilder_.setMessage(builderForValue.build());
       }
-      payloadCase_ = 12;
+      payloadCase_ = 14;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      */
     public Builder mergeError(com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage value) {
       if (errorBuilder_ == null) {
-        if (payloadCase_ == 12 &&
+        if (payloadCase_ == 14 &&
             payload_ != com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.getDefaultInstance()) {
           payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.newBuilder((com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_)
               .mergeFrom(value).buildPartial();
@@ -2126,26 +2525,26 @@ private static final long serialVersionUID = 0L;
         }
         onChanged();
       } else {
-        if (payloadCase_ == 12) {
+        if (payloadCase_ == 14) {
           errorBuilder_.mergeFrom(value);
         }
         errorBuilder_.setMessage(value);
       }
-      payloadCase_ = 12;
+      payloadCase_ = 14;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      */
     public Builder clearError() {
       if (errorBuilder_ == null) {
-        if (payloadCase_ == 12) {
+        if (payloadCase_ == 14) {
           payloadCase_ = 0;
           payload_ = null;
           onChanged();
         }
       } else {
-        if (payloadCase_ == 12) {
+        if (payloadCase_ == 14) {
           payloadCase_ = 0;
           payload_ = null;
         }
@@ -2154,33 +2553,33 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      */
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.Builder getErrorBuilder() {
       return getErrorFieldBuilder().getBuilder();
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      */
     @java.lang.Override
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessageOrBuilder getErrorOrBuilder() {
-      if ((payloadCase_ == 12) && (errorBuilder_ != null)) {
+      if ((payloadCase_ == 14) && (errorBuilder_ != null)) {
         return errorBuilder_.getMessageOrBuilder();
       } else {
-        if (payloadCase_ == 12) {
+        if (payloadCase_ == 14) {
           return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage) payload_;
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 12;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage error = 14;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessageOrBuilder> 
         getErrorFieldBuilder() {
       if (errorBuilder_ == null) {
-        if (!(payloadCase_ == 12)) {
+        if (!(payloadCase_ == 14)) {
           payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.ErrorMessage.getDefaultInstance();
         }
         errorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -2190,7 +2589,7 @@ private static final long serialVersionUID = 0L;
                 isClean());
         payload_ = null;
       }
-      payloadCase_ = 12;
+      payloadCase_ = 14;
       onChanged();;
       return errorBuilder_;
     }
@@ -2198,33 +2597,33 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessageOrBuilder> heartbeatBuilder_;
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      * @return Whether the heartbeat field is set.
      */
     @java.lang.Override
     public boolean hasHeartbeat() {
-      return payloadCase_ == 13;
+      return payloadCase_ == 15;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      * @return The heartbeat.
      */
     @java.lang.Override
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage getHeartbeat() {
       if (heartbeatBuilder_ == null) {
-        if (payloadCase_ == 13) {
+        if (payloadCase_ == 15) {
           return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_;
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.getDefaultInstance();
       } else {
-        if (payloadCase_ == 13) {
+        if (payloadCase_ == 15) {
           return heartbeatBuilder_.getMessage();
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      */
     public Builder setHeartbeat(com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage value) {
       if (heartbeatBuilder_ == null) {
@@ -2236,11 +2635,11 @@ private static final long serialVersionUID = 0L;
       } else {
         heartbeatBuilder_.setMessage(value);
       }
-      payloadCase_ = 13;
+      payloadCase_ = 15;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      */
     public Builder setHeartbeat(
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.Builder builderForValue) {
@@ -2250,15 +2649,15 @@ private static final long serialVersionUID = 0L;
       } else {
         heartbeatBuilder_.setMessage(builderForValue.build());
       }
-      payloadCase_ = 13;
+      payloadCase_ = 15;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      */
     public Builder mergeHeartbeat(com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage value) {
       if (heartbeatBuilder_ == null) {
-        if (payloadCase_ == 13 &&
+        if (payloadCase_ == 15 &&
             payload_ != com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.getDefaultInstance()) {
           payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.newBuilder((com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_)
               .mergeFrom(value).buildPartial();
@@ -2267,26 +2666,26 @@ private static final long serialVersionUID = 0L;
         }
         onChanged();
       } else {
-        if (payloadCase_ == 13) {
+        if (payloadCase_ == 15) {
           heartbeatBuilder_.mergeFrom(value);
         }
         heartbeatBuilder_.setMessage(value);
       }
-      payloadCase_ = 13;
+      payloadCase_ = 15;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      */
     public Builder clearHeartbeat() {
       if (heartbeatBuilder_ == null) {
-        if (payloadCase_ == 13) {
+        if (payloadCase_ == 15) {
           payloadCase_ = 0;
           payload_ = null;
           onChanged();
         }
       } else {
-        if (payloadCase_ == 13) {
+        if (payloadCase_ == 15) {
           payloadCase_ = 0;
           payload_ = null;
         }
@@ -2295,33 +2694,33 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      */
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.Builder getHeartbeatBuilder() {
       return getHeartbeatFieldBuilder().getBuilder();
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      */
     @java.lang.Override
     public com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessageOrBuilder getHeartbeatOrBuilder() {
-      if ((payloadCase_ == 13) && (heartbeatBuilder_ != null)) {
+      if ((payloadCase_ == 15) && (heartbeatBuilder_ != null)) {
         return heartbeatBuilder_.getMessageOrBuilder();
       } else {
-        if (payloadCase_ == 13) {
+        if (payloadCase_ == 15) {
           return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage) payload_;
         }
         return com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.getDefaultInstance();
       }
     }
     /**
-     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 13;</code>
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage heartbeat = 15;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage, com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessageOrBuilder> 
         getHeartbeatFieldBuilder() {
       if (heartbeatBuilder_ == null) {
-        if (!(payloadCase_ == 13)) {
+        if (!(payloadCase_ == 15)) {
           payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.HeartbeatMessage.getDefaultInstance();
         }
         heartbeatBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -2331,9 +2730,150 @@ private static final long serialVersionUID = 0L;
                 isClean());
         payload_ = null;
       }
-      payloadCase_ = 13;
+      payloadCase_ = 15;
       onChanged();;
       return heartbeatBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList, com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageListOrBuilder> ackBuilder_;
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     * @return Whether the ack field is set.
+     */
+    @java.lang.Override
+    public boolean hasAck() {
+      return payloadCase_ == 16;
+    }
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     * @return The ack.
+     */
+    @java.lang.Override
+    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList getAck() {
+      if (ackBuilder_ == null) {
+        if (payloadCase_ == 16) {
+          return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList) payload_;
+        }
+        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.getDefaultInstance();
+      } else {
+        if (payloadCase_ == 16) {
+          return ackBuilder_.getMessage();
+        }
+        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     */
+    public Builder setAck(com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList value) {
+      if (ackBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        payload_ = value;
+        onChanged();
+      } else {
+        ackBuilder_.setMessage(value);
+      }
+      payloadCase_ = 16;
+      return this;
+    }
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     */
+    public Builder setAck(
+        com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.Builder builderForValue) {
+      if (ackBuilder_ == null) {
+        payload_ = builderForValue.build();
+        onChanged();
+      } else {
+        ackBuilder_.setMessage(builderForValue.build());
+      }
+      payloadCase_ = 16;
+      return this;
+    }
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     */
+    public Builder mergeAck(com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList value) {
+      if (ackBuilder_ == null) {
+        if (payloadCase_ == 16 &&
+            payload_ != com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.getDefaultInstance()) {
+          payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.newBuilder((com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList) payload_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          payload_ = value;
+        }
+        onChanged();
+      } else {
+        if (payloadCase_ == 16) {
+          ackBuilder_.mergeFrom(value);
+        }
+        ackBuilder_.setMessage(value);
+      }
+      payloadCase_ = 16;
+      return this;
+    }
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     */
+    public Builder clearAck() {
+      if (ackBuilder_ == null) {
+        if (payloadCase_ == 16) {
+          payloadCase_ = 0;
+          payload_ = null;
+          onChanged();
+        }
+      } else {
+        if (payloadCase_ == 16) {
+          payloadCase_ = 0;
+          payload_ = null;
+        }
+        ackBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     */
+    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.Builder getAckBuilder() {
+      return getAckFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     */
+    @java.lang.Override
+    public com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageListOrBuilder getAckOrBuilder() {
+      if ((payloadCase_ == 16) && (ackBuilder_ != null)) {
+        return ackBuilder_.getMessageOrBuilder();
+      } else {
+        if (payloadCase_ == 16) {
+          return (com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList) payload_;
+        }
+        return com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList ack = 16;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList, com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageListOrBuilder> 
+        getAckFieldBuilder() {
+      if (ackBuilder_ == null) {
+        if (!(payloadCase_ == 16)) {
+          payload_ = com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.getDefaultInstance();
+        }
+        ackBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList, com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList.Builder, com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageListOrBuilder>(
+                (com.smartconsultor.microservice.gateway.adapter.dto.gateway.AckMessageList) payload_,
+                getParentForChildren(),
+                isClean());
+        payload_ = null;
+      }
+      payloadCase_ = 16;
+      onChanged();;
+      return ackBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

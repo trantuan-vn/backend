@@ -3,6 +3,7 @@ package com.smartconsultor.microservice.gateway.infrastructure.service.pulsar;
 
 import com.smartconsultor.microservice.gateway.adapter.dto.MessageRequest;
 import com.smartconsultor.microservice.gateway.adapter.dto.MessageResponse;
+import com.smartconsultor.microservice.gateway.adapter.dto.gateway.GatewayMessage;
 import com.smartconsultor.microservice.gateway.common.error.ProducerFailure;
 import com.smartconsultor.microservice.gateway.domain.model.ClientCommand;
 import com.smartconsultor.microservice.gateway.domain.model.MessagePointer;
@@ -115,7 +116,7 @@ public class PulsarProducerManager {
         return promise.future();
     }
 
-    public Future<MessageResponse> sendToTopic(String topic, String socketId, MessageRequest message) {
+    public Future<GatewayMessage> sendToTopic(String topic, GatewayMessage message) {
         Producer<byte[]> producer = producers.get(topic);
         BacklogManager backlogManager = backlogManagers.get(topic);
 
@@ -128,19 +129,10 @@ public class PulsarProducerManager {
             return Future.failedFuture("Rate limit exceeded");
         }
 
-        Promise<MessageResponse> promise = Promise.promise();
+        Promise<GatewayMessage> promise = Promise.promise();
         vertx.executeBlocking(blockingPromise -> {
             try {
-                ClientCommand clientCommand = new ClientCommand(socketId, message);
-                String json = clientCommand.toJson();
-
-                if (json.getBytes(StandardCharsets.UTF_8).length > Constants.MAX_MESSAGE_SIZE_BYTES) {
-                    backlogManager.getRateLimiter().release();
-                    blockingPromise.fail("Message size exceeds maximum allowed limit");
-                    return;
-                }
-
-                byte[] payload = json.getBytes(StandardCharsets.UTF_8);
+                byte[] payload = message.toByteArray();
 
                 producer.newMessage()
                     .value(payload)
